@@ -9,3 +9,5 @@ var db = require('./app/config/db.config.js'); // подключение нас�
 db.sequelize.sync({force: true});
 
 app.listen(3000);
+
+console.log("server port 3000")
