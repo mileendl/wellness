@@ -6,7 +6,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var db = require('./app/config/db.config.js'); // подключение настроек базы данных
 
-db.sequelize.sync({force: true});
+db.sequelize.sync({force: false});
+
+var user = require('./app/route/user.route.js');
+user(app);
 
 app.listen(3000);
 
