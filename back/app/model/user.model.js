@@ -14,7 +14,9 @@ module.exports = (sequelize, Sequelize) => {
             },
             username: {
                 type: Sequelize.STRING(50),
-                allowNull: false
+                allowNull: false,
+                unique: true
+
             },
             password: {
                 type: Sequelize.STRING(150),
@@ -51,6 +53,8 @@ module.exports = (sequelize, Sequelize) => {
             onUpdate: 'CASCADE',
             sourceKey: 'id'
         });
+
     };
+
     return User;
 };

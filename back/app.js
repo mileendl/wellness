@@ -1,12 +1,16 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var authentication = require('./app/routes/auth_routes')
+
+require('./app/auth/auth');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var cors = require('cors');
 var corsOptions = {
-    origin: '*', //Любое происхождение приемлимо //'http://localhost:4200', // указываем, откуда будут приходить запросы
+    origin: '*', //Любое происхождение приемлимо
     credentials: true, // разрешаем обрабатывать запросы
     optionSuccessStatus: 200 // при успешной обработке запроса будет возвращён статус 200
 };
@@ -16,7 +20,9 @@ var db = require('./app/config/db.config.js'); // подключение нас�
 
 db.sequelize.sync({ force: false });
 
-var user = require('./app/route/user.route.js');
+app.use('/', authentication)
+
+var user = require('./app/routes/user.route.js');
 user(app);
 
 app.listen(3000);
