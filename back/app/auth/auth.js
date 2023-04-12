@@ -13,7 +13,7 @@ passport.use('register', new localStrategy(
         passReqToCallback: true,
     },
 
-    function (req, username, password, done) {
+    function (req, username, password, done,) {
 
         db.user.findOne({ where: { username: username } }).then(function (user) {
 
@@ -23,17 +23,17 @@ passport.use('register', new localStrategy(
                         return done(err);
                     }
 
-                    user = { username: req.body.username, password: hash, email: req.body.email, name: req.body.name }
+                    user = { username: req.body.username, password: hash, name: req.body.name }
                     db.user.create(user)
                         .then(() => {
                             return done(null, user, 'Success');
                         }).catch((err) => {
                             console.log(err)
-                            return done(null, { msg: "Can't create user", });
+                            return done(err, null, { status: 500, msg: "Can't create user", });
                         })
                 })
             } else {
-                return done('Such user already exists', null, { msg: 'Such user already exists' });
+                return done(null, false, { status: 400, msg: 'Such user already exists' });
             }
         }).catch(err => {
             return done(err);
@@ -47,26 +47,22 @@ passport.use('login', new localStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, function (req, username, password, done) {
-    try {
-        db.user.findOne({ where: { username: username } }).then((user) => {
-            if (user == null) {
-                done(null, false, { msg: 'Wrong password or login' });
-            } else {
-                bcrypt.compare(password, user.password).then((isValid) => {
-                    if (isValid) {
-                        return done(null, user, { msg: 'Logged in successfully' });
-                    }
-                    return done(null, false, { msg: 'Wrong password or login' });
-                })
-            }
-        }
-        ).catch((err) => {
-            done(err);
-        })
-    }
-    catch (err) {
 
+    db.user.findOne({ where: { username: username } }).then((user) => {
+        if (user == null) {
+            done(null, false, { status: 401, msg: 'Wrong password or login' });
+        } else {
+            bcrypt.compare(password, user.password).then((isValid) => {
+                if (isValid) {
+                    return done(null, user, { msg: 'Logged in successfully' });
+                }
+                return done(null, false, { status: 401, msg: 'Wrong password or login' });
+            })
+        }
     }
+    ).catch((err) => {
+        done(err);
+    })
 }
 ))
 
