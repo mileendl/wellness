@@ -8,12 +8,10 @@ function authRespoonse(req, res, err, user, info) {
     try {
         // console.log(user)
         if (err || !user) {
-            // return next(info.msg);
-            //Сообщаем клиенту об ошибке авторизации
+            console.log(info)
             res.status(info.status).send(info.msg);
             return null;
         }
-
         req.login(user, { session: false }, async (err) => {
             if (err) {
                 // return next(err);
@@ -23,13 +21,14 @@ function authRespoonse(req, res, err, user, info) {
             const body = user.username;
             const token = jwt.sign({ user: body }, authConfig.secret, { expiresIn: authConfig.expiration });
 
+            //Простой delete не удаляет поле из объекта-экземпляра прототипа
+            user.password = undefined
             //Здесь в json собираются все данные, которые надо передать клиенту после успешной авторизации
-            return res.json({ auth: token, username: user.username });
+            return res.json({ accessToken: token, user: user });
         })
     } catch (err) {
         //Сообщаем об ошибке сервера - что-то сломалось
         res.status(500).send(err);
-        // return next(err);
     }
 }
 

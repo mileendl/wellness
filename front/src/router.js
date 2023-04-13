@@ -2,13 +2,13 @@ import { createWebHistory, createRouter } from "vue-router";
 // импорт компонентов
 import Calendar from "./components/CalendarPage";
 import AddUser from "./components/AddUser";
-
+import LogIn from "./components/LogIn"
 
 // определяем маршруты
 const routes = [
     {
         path: "/calendar", // указание маршрута, по которому будем переходить к списку пользователей
-        name: "calndar", // имя маршрута
+        name: "calendar", // имя маршрута
         component: Calendar, // компонент, на основании которого будет отрисовываться страница
         meta: {
             title: "Календарь"
@@ -20,6 +20,14 @@ const routes = [
         component: AddUser,
         meta: {
             title: "Добавление пользователя"
+        }
+    },
+    {
+        path: "/logIn",
+        name: "login",
+        component: LogIn,
+        meta: {
+            title: "Вход в учетную запись"
         }
     },
 ];
