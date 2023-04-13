@@ -1,9 +1,19 @@
 import AuthService from '../services/auth.service';
-const user = JSON.parse(localStorage.getItem('user'));
+const userData = JSON.parse(localStorage.getItem('userData'));
 
-const initialState = user
-    ? { status: { loggedIn: true }, user }
-    : { status: { loggedIn: false }, user: null };
+var initialState = userData
+    ? { status: { loggedIn: true }, user: userData.user, accessToken: userData.accessToken }
+    : { status: { loggedIn: false }, user: null, accessToken: null };
+
+// var initialState;
+// if (userData) {
+//     initialState = { status: { loggedIn: true }, user: userData.user, accessToken: ''}
+//     if (userData.accessToken) {
+//         initialState.accessToken = userData.accessToken
+//     }
+// } else{
+
+// }
 
 const auth = {
     namespaced: true,
@@ -11,8 +21,8 @@ const auth = {
     actions: {
         login({ commit }, user) {
             return AuthService.login(user).then(
-                user => {
-                    commit('loginSuccess', user);
+                data => {
+                    commit('loginSuccess', data);
                     return Promise.resolve(user);
                 },
                 error => {
@@ -41,20 +51,23 @@ const auth = {
         }
     },
     mutations: { // Мутации. Позволяют изменять состояние хранилища во Vuex. Сохраняют данные пользователя в локальное хранилище в браузере. Также удаляют данные пользователя
-        loginSuccess(state, user) {
+        loginSuccess(state, data) {
             state.status.loggedIn = true;
-            state.user = user;
+            state.user = data.user;
+            state.accessToken = data.accessToken;
         },
         loginFailure(state) {
             state.status.loggedIn = false;
             state.user = null;
+            state.accessToken = null;
         },
         logout(state) {
             state.status.loggedIn = false;
             state.user = null;
+            state.accessToken = null;
         },
         registerSuccess(state) {
-            state.status.loggedIn = false;
+            state.status.loggedIn = true;
         },
         registerFailure(state) {
             state.status.loggedIn = false;

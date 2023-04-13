@@ -15,7 +15,6 @@ passport.use('register', new localStrategy(
 
     function (req, username, password, done,) {
 
-        console.log('Lora')
         db.user.findOne({ where: { username: username } }).then(function (user) {
 
             if (user == null) {
@@ -49,27 +48,20 @@ passport.use('login', new localStrategy({
     passReqToCallback: true
 }, function (req, username, password, done) {
 
-    console.log('Nevil')
     db.user.findOne({ where: { username: username } }).then((user) => {
-        console.log('Irma')
         if (user == null) {
-            console.log('Olek')
             done(null, false, { status: 401, msg: 'Wrong password or login' });
         } else {
-            console.log('Martin')
             bcrypt.compare(password, user.password).then((isValid) => {
                 if (isValid) {
-                    console.log('Patrick')
                     return done(null, user, { msg: 'Logged in successfully' });
                 } else {
-                    console.log('Peter')
                     return done(null, false, { status: 401, msg: 'Wrong password or login' });
                 }
             })
         }
     }
     ).catch((err) => {
-        console.log('harry')
         done(err);
     })
 }

@@ -13,14 +13,15 @@
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
                     v-model="user.password">
             </div>
+            <div class="form-group mb-3">
+                <div v-if="message" class="alert alert-danger">{{ message }}</div>
+            </div>
             <!-- <div class="checkbox mb-3 " style="text-align: center;">
           <input type="checkbox" id="checkRemember" value="remember-me" style="scale: 2; margin-right: 0.7rem;" v-model="rememberMe">
           <label class="form-label" for="checkRemember"> Запомнить меня</label>
         </div> -->
             <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
-            <div class="form-group">
-                <div v-if="message" class="alert alert-danger">{{ message }}</div>
-            </div>
+           
         </form>
     </div>
 </template>
@@ -46,7 +47,7 @@ export default {
         }
     },
     //Компонент отрисован (не совсем, но ладно)
-    mounted() {
+    created() {
         if (this.loggedIn) {
             //Направляет пользователя на представление '/calendar'
             this.$router.push('/calendar');
@@ -59,10 +60,13 @@ export default {
             this.message = '';
             // обращаемся к методу register, который определён в auth.service.js
             this.$store.dispatch("auth/login", this.user).then(data => {
-                this.message = data.message;
+                this.message = data.msg;
+                console.log(data);
+                //Перенаправляет на календарь
+                this.$router.push('/calendar');
                 // this.successful = true;
-            }).catch(err => {
-                this.message = err.response.data.message;
+            }).catch((err)=>{
+                this.message =err.response.data;
             })
         }
     }

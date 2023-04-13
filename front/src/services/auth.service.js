@@ -7,15 +7,16 @@ function login(user) {
         password: user.password
     }
     return http.post('/login', loginData).then(response => {
+        // console.log(response.data)
         if (response.data.accessToken) {
-            localStorage.setItem(JSON.stringify(response.data))
+            localStorage.setItem('userData', JSON.stringify(response.data))
         }
         return response.data;
     })
 }
 
 function logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('userData');
 }
 function register(user) {
     var registerData = {
