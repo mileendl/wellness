@@ -26,7 +26,6 @@ const auth = {
                     return Promise.resolve(user);
                 },
                 error => {
-                    console.log(error)
                     commit('loginFailure');
                     return Promise.reject(error);
                 }
@@ -39,9 +38,9 @@ const auth = {
         register({ commit }, user) {
             return AuthService.register(user).then(
                 response => {
-                    commit('registerSuccess');
+                    commit('registerSuccess', response);
                     // Promise - объект, представляющий результат успешного или неудачного завершения операции.
-                    return Promise.resolve(response.data);
+                    return Promise.resolve(response);
                 },
                 error => {
                     commit('registerFailure');
@@ -66,8 +65,11 @@ const auth = {
             state.user = null;
             state.accessToken = null;
         },
-        registerSuccess(state) {
+        //На всякий случай отдельно от loginSuccess, вдруг понадобится в будущем
+        registerSuccess(state, data) {
             state.status.loggedIn = true;
+            state.user = data.user;
+            state.accessToken = data.accessToken;
         },
         registerFailure(state) {
             state.status.loggedIn = false;

@@ -25,10 +25,11 @@
         <input type="checkbox" id="checkRemember" value="remember-me" style="scale: 2; margin-right: 0.7rem;" v-model="rememberMe">
         <label class="form-label" for="checkRemember"> Запомнить меня</label>
       </div> -->
-      <button class="w-100 btn btn-lg btn-primary" type="submit">Создать учетную запись</button>
-      <div class="form-group">
+      <div class="form-group mb-3">
         <div v-if="message" class="alert alert-danger">{{ message }}</div>
       </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Создать учетную запись</button>
+
     </form>
   </div>
 </template>
@@ -53,6 +54,9 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
+    },
+    passwordRepCorrect() {
+      return this.repeatPassword === this.user.password;
     }
   },
   //Компонент отрисован (не совсем, но ладно)
@@ -64,16 +68,28 @@ export default {
   },
   methods: {
     //err
-    handleRegister() {
-      // err.preventDefault();
+    handleRegister(err) {
+      err.preventDefault();
       this.message = '';
+      if (!this.passwordRepCorrect) {
+        this.message = 'Введенные пароли не совпадают!';
+        return;
+      }
       // обращаемся к методу register, который определён в auth.service.js
       this.$store.dispatch("auth/register", this.user).then(data => {
         console.log(data);
         this.message = data.message;
+        this.$router.push('/calendar');
+
         // this.successful = true;
       }).catch(err => {
-        this.message = err.response.data.message;
+        console.log(err)
+        // this.message = err.response.data;
+        switch (err.response.status) {
+          case 400: this.message = 'Пользователь с таким логином уже существует!';
+            break;
+          case 500: this.message = 'Не удалось создать пользователя. Внутренняя ошибка сервера.'
+        }
       })
     }
   }

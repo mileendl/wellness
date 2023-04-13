@@ -7,7 +7,6 @@ function login(user) {
         password: user.password
     }
     return http.post('/login', loginData).then(response => {
-        // console.log(response.data)
         if (response.data.accessToken) {
             localStorage.setItem('userData', JSON.stringify(response.data))
         }
@@ -24,7 +23,14 @@ function register(user) {
         password: user.password,
         name: user.name
     }
-    return http.post('/register', registerData);
+    return http.post('/register', registerData).then(response => {
+        if (response.status == 200) {
+            if (response.data.accessToken) {
+                localStorage.setItem('userData', JSON.stringify(response.data))
+            }
+        }
+        return response.data;
+    })
 }
 
 export default {

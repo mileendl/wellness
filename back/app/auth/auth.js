@@ -22,7 +22,6 @@ passport.use('register', new localStrategy(
                     if (err) {
                         return done(err);
                     }
-
                     user = { username: req.body.username, password: hash, name: req.body.name }
                     db.user.create(user)
                         .then(() => {
