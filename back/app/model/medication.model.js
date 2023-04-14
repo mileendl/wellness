@@ -12,11 +12,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.INTEGER(10),
                 allowNull: false
             },
-
         });
 
     // Определяем связи таблицы user_category с другими таблицами
-    Medication.associate = (models) =>  {
+    Medication.associate = (models) => {
         // Определение связи один-ко-многим с таблицей user. Это определение связи с одной стороны.
         // Связь также определена со второй стороны (со стороны таблицы user): в файле user.model.js
         Medication.belongsTo(models.user, {

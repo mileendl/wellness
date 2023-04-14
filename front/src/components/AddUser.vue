@@ -1,58 +1,100 @@
 <template>
-    <div class="hello">
-      <h1>{{ msg }}</h1>
-      <p>
-        Ass we can / customize this project,<br>
-        check out the
-        <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-      </p>
-      <h3>Installed CLI Plugins</h3>
-      <ul>
-        <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-        <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-      </ul>
-      <h3>Essential Links</h3>
-      <ul>
-        <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-        <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-        <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-        <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-        <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-      </ul>
-      <h3>Ecosystem</h3>
-      <ul>
-        <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-        <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-        <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-        <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-        <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-      </ul>
-    </div>
-  </template>
+  <div class="container-sm" style="max-width: 480px;">
+
+    <form class="m-4" @submit="handleRegister">
+      <h1 class="h3 mb-3 fw-normal align-self-center" style="text-align: center;">Регистрация</h1>
+
+      <div class="mb-3">
+        <label class="form-label" for="loginInput">Логин</label>
+        <input class="form-control" id="loginInput" placeholder="Login" v-model="user.username">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="floatingPassword">Пароль</label>
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" v-model="user.password">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="repeatPassword">Повторите Пароль</label>
+        <input type="password" class="form-control" id="repeatPassword" placeholder="Repeat Password"
+          v-model="repeatPassword">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="nameInput">ФИО</label>
+        <input class="form-control" id="nameInput" placeholder="Login" v-model="user.name">
+      </div>
+      <!-- <div class="checkbox mb-3 " style="text-align: center;">
+        <input type="checkbox" id="checkRemember" value="remember-me" style="scale: 2; margin-right: 0.7rem;" v-model="rememberMe">
+        <label class="form-label" for="checkRemember"> Запомнить меня</label>
+      </div> -->
+      <div class="form-group mb-3">
+        <div v-if="message" class="alert alert-danger">{{ message }}</div>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Создать учетную запись</button>
+
+    </form>
+  </div>
+</template>
   
-  <script>
-  export default {
-    name: 'HelloWorld',
-    props: {
-      msg: String
+<script>
+export default {
+  name: 'RegisterUser',
+  //Статические переменные
+  data() {
+    return {
+      user: {
+        username: '',
+        password: '',
+        name: '',
+      },
+      repeatPassword: '', //Повторный ввод пароля
+      message: '',
+
+    }
+  },
+  //Вычисляемые динамически переменные
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+    passwordRepCorrect() {
+      return this.repeatPassword === this.user.password;
+    }
+  },
+  //Компонент отрисован (не совсем, но ладно)
+  mounted() {
+    if (this.loggedIn) {
+      //Направляет пользователя на представление '/calendar'
+      this.$router.push('/calendar');
+    }
+  },
+  methods: {
+    //err
+    handleRegister(err) {
+      err.preventDefault();
+      this.message = '';
+      if (!this.passwordRepCorrect) {
+        this.message = 'Введенные пароли не совпадают!';
+        return;
+      }
+      // обращаемся к методу register, который определён в auth.service.js
+      this.$store.dispatch("auth/register", this.user).then(data => {
+        console.log(data);
+        this.message = data.message;
+        this.$router.push('/calendar');
+
+        // this.successful = true;
+      }).catch(err => {
+        console.log(err)
+        // this.message = err.response.data;
+        switch (err.response.status) {
+          case 400: this.message = 'Пользователь с таким логином уже существует!';
+            break;
+          case 500: this.message = 'Не удалось создать пользователя. Внутренняя ошибка сервера.'
+        }
+      })
     }
   }
-  </script>
-  
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
-  h3 {
-    margin: 40px 0 0;
-  }
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-  a {
-    color: #42b983;
-  }
-  </style>
+  // props: {
+  //   msg: String
+  // }
+}
+</script>

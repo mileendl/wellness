@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <router-view />
+  <router-view class="mt-4" />
 </template>
 <script>
 import NavBar from './components/NavBar'
@@ -12,7 +12,7 @@ export default {
   }
 }
 </script>
-<style>
+<!-- <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -33,4 +33,4 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
-</style>
+</style> -->
