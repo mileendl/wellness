@@ -12,6 +12,7 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><router-link to="/calendar" class="nav-link px-2 text-secondary">Календарь</router-link></li>
                     <li><router-link to="/addUser" class="nav-link px-2 text-white">Добавить</router-link></li>
+                    <li><router-link to="/chartDisplay" class="nav-link px-2 text-white">График</router-link></li>
                     <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
                             class="nav-link px-2 text-white">Pricing</a></li>
                     <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"

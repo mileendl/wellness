@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 // импорт компонентов
 import Calendar from "./components/CalendarPage";
 import AddUser from "./components/AddUser";
+import ChartDisplay from "./components/ChartDisplay";
 
 
 // определяем маршруты
@@ -20,6 +21,14 @@ const routes = [
         component: AddUser,
         meta: {
             title: "Добавление пользователя"
+        }
+    },
+    {
+        path: "/chartdisplay",
+        name: "chart-display",
+        component: ChartDisplay,
+        meta: {
+            title: "Граф ик"
         }
     },
 ];
