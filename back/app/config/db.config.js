@@ -13,6 +13,7 @@ var dbProperties = {
 };
 
 var Sequelize = require('sequelize');
+
 var sequelize = new Sequelize(
     dbProperties.database, dbProperties.username, dbProperties.password,
     {
@@ -37,7 +38,7 @@ var sequelize = new Sequelize(
 
 var db = {};
 
-db.Sequelize = Sequelize;
+// db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 // Подключение моделей

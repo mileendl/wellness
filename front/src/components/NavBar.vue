@@ -1,39 +1,94 @@
 <template>
-    <header class="p-3 text-bg-dark">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="https://getbootstrap.com/"
-                    class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Navbar">
+        <div class="container-fluid">
+            <router-link class="navbar-brand" to="/">Wellness</router-link>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarProper"
+                aria-controls="navbarProper" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><router-link to="/calendar" class="nav-link px-2 text-secondary">Календарь</router-link></li>
-                    <li><router-link to="/addUser" class="nav-link px-2 text-white">Добавить</router-link></li>
-                    <li><router-link to="/chartDisplay" class="nav-link px-2 text-white">График</router-link></li>
-                    <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
+            <div class="navbar-collapse collapse" id="navbarProper">
+                <!-- <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"> -->
+
+                <!-- Только для аутентифицированных бро -->
+                <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="currentUser">
+                    <li class="nav-item">
+                        <router-link to="/calendar" class="nav-link px-2 text-secondary">Календарь</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/addHealthRecord" class="nav-link px-2 text-white">Добавить значение</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link to="/chartDisplay" class="nav-link px-2 text-white">График</router-link>
+                    </li>
+                    <!-- <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
                             class="nav-link px-2 text-white">Pricing</a></li>
-                    <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
+                    <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
                             class="nav-link px-2 text-white">FAQs</a>
                     </li>
-                    <li><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
-                            class="nav-link px-2 text-white">About</a></li>
+                    <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
+                            class="nav-link px-2 text-white">About</a></li> -->
                 </ul>
 
-                <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2">Login</button>
-                    <button type="button" class="btn btn-warning">Sign-up</button>
+                <div v-if="currentUser" class="d-lg-flex justify-content-lg-end mb-2 mb-md-0">
+                    <ul class="navbar-nav me-auto mb-md-0">
+                        <li class="nav-item">
+                            <div class="nav-link px-2 text-white">
+                                <!-- <i style="color: white;" class="bi bi-person-circle mr-3 "></i> -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                    class="bi bi-person-circle mx-2" viewBox="0 0 16 16">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                    <path fill-rule="evenodd"
+                                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                                </svg>
+                                <span v-text="currentUser.username"></span>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-outline-danger  m-1" @click="logOut">Выйти</button>
+                        </li>
+                    </ul>
+                </div>
+                <div v-else class="d-lg-flex justify-content-lg-end mb-2 mb-md-0">
+                    <ul class="navbar-nav me-auto mb-md-0">
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-outline-light  m-1" @click="logIn">Войти</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="btn btn-warning  m-1" @click="register">Зарегистрироваться</button>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </header>
+    </nav>
 </template>
 
 <script>
 
 export default {
     name: "NavBar",
+    data() {
+        return {}
+
+    },
+    computed: {
+        currentUser() {
+            return this.$store.state.auth.user;
+        }
+    },
+    methods: {
+        logIn() {
+            this.$router.push('/logIn');
+
+        },
+        logOut() {
+            this.$store.dispatch('auth/logout');
+            this.$router.push('/');
+        },
+        register() {
+            this.$router.push('/addUser');
+        }
+    },
 }
 </script>
