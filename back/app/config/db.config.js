@@ -46,6 +46,8 @@ db.user = require('../model/user.model.js')(sequelize, Sequelize);
 db.health_record_item = require('../model/health_record_item.model.js')(sequelize, Sequelize);
 db.training_program = require('../model/training_program.model.js')(sequelize, Sequelize);
 db.medication = require('../model/medication.model.js')(sequelize, Sequelize);
+db.health_indicator = require('../model/health_indicator.model.js')(sequelize, Sequelize);
+
 
 // Связывание моделей без импорта файлов (то есть, чтобы в файле описания любой модели можно было
 // обращаться к другим моделям по имени без необходимости импорта в виде require(...))
