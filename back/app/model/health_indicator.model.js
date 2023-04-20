@@ -1,4 +1,4 @@
-const { STRING, DOUBLE } = require("sequelize");
+const { STRING, DOUBLE, DATE } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
     var HealthIndicator = sequelize.define(
@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
             },
             unit:{
                 type:STRING,
+                allowNull: false
+            },
+            date:{
+                type: DATE,
                 allowNull: false
             }
         }
