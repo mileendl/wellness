@@ -40,13 +40,6 @@ module.exports = (sequelize, Sequelize) => {
             sourceKey: 'id'
         });
 
-        User.hasMany(models.training_program, {
-            foreignKey: 'user_id',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-            sourceKey: 'id'
-        });
-
         User.hasMany(models.medication, {
             foreignKey: 'user_id',
             onDelete: 'CASCADE',

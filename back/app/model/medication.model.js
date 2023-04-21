@@ -12,6 +12,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.INTEGER(10),
                 allowNull: false
             },
+            name: {
+                type: Sequelize.STRING(100), // тип данных STRING (в MySQL — VARCHAR)
+                allowNull: false
+            },
         });
 
     // Определяем связи таблицы user_category с другими таблицами
