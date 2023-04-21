@@ -5,18 +5,10 @@
         <div id="app">
             <input type="text" v-model="film" list="health_indicators">
             <datalist id="health_indicators">
-                <option v-for="film in health_indicators" :key="film.id">{{film.data_type}}</option>
+                <option v-for="film in health_indicators" :key="film.id">{{film.data_type+","+ film.unit}}</option>
             </datalist>
         </div>
         <input v-model="message" placeholder="введите данные">
-        <br>
-        <span>Еденицы измерения:</span>
-        <div id="app-1">
-            <input type="text" v-model="film" list="health_indicators">
-            <datalist id="health_indicators">
-                <option v-for="film in health_indicators" :key="film.id">{{film.unit}}</option>
-            </datalist>
-        </div>
         <p>
             <input type="submit" value="Submit">  
         </p>
