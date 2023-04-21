@@ -4,6 +4,8 @@ var passport = require('passport');
 const jwt = require('jsonwebtoken');
 const authConfig = require("../config/auth.config");
 
+const db = require('../config/db.config')
+
 function authRespoonse(req, res, err, user, info) {
     try {
         // console.log(user)
@@ -44,6 +46,16 @@ router.post('/login', async (req, res, next) => {
         async (err, user, info) =>
             authRespoonse(req, res, err, user, info)
     )(req, res, next)
+})
+
+router.get('/defaultdata', (req, res, next) =>{
+    var default_data = {};
+    db.health_indicator.findAll().then((indicators)=>{
+        console.log(indicators);
+        default_data.indicators = indicators;
+        res.json(default_data);
+    });
+
 })
 
 module.exports = router;

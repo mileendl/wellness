@@ -20,7 +20,7 @@ app.use(cors(corsOptions));
 var db = require('./app/config/db.config.js'); // подключение настроек базы данных
 const passport = require('passport');
 
-db.sequelize.sync({ force: true });
+db.sequelize.sync({ force: false });
 
 app.use('/', authRoutes);
 
@@ -29,3 +29,4 @@ app.use('/events', passport.authenticate('jwt', { session: false }), eventRoutes
 app.listen(3000);
 
 console.log("server port 3000")
+
