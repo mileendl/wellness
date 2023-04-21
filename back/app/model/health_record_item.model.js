@@ -1,5 +1,6 @@
 const healthIndicatorModel = require("./health_indicator.model");
 const health_indicatorModel = require("./health_indicator.model");
+const { STRING, DOUBLE, DATE } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
     var HealthRecord = sequelize.define(
@@ -17,6 +18,10 @@ module.exports = (sequelize, Sequelize) => {
             },
             value:{
                 type: Sequelize.INTEGER(10),
+                allowNull: false
+            },
+            date:{
+                type: DATE,
                 allowNull: false
             }
         });

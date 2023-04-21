@@ -9,10 +9,6 @@ module.exports = (sequelize, Sequelize) => {
                 primaryKey: true,
                 allowNull: false
             },
-            record_id: {
-                type: Sequelize.INTEGER(10),
-                allowNull: false
-            },
             //тип заносимых данных
             data_type:{
                 type: STRING,
@@ -21,23 +17,19 @@ module.exports = (sequelize, Sequelize) => {
             unit:{
                 type:STRING,
                 allowNull: false
-            },
-            date:{
-                type: DATE,
-                allowNull: false
             }
         }
     );
     HealthIndicator.associate = (models) =>  {
-        HealthIndicator.hasMany(models.health_indicator, {
-            foreignKey: 'record_id',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-            sourceKey: 'id'
-        });
-        HealthIndicator.belongsTo(models.health_record_item , {
-            foreignKey: 'record_id'
-        });
+        // HealthIndicator.hasMany(models.health_indicator, {
+        //     foreignKey: 'record_id',
+        //     onDelete: 'CASCADE',
+        //     onUpdate: 'CASCADE',
+        //     sourceKey: 'id'
+        // });
+        //HealthIndicator.belongsTo(models.health_record_item , {
+           // foreignKey: 'record_id'
+        ///});
     };
     return HealthIndicator;
 }
