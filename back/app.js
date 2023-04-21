@@ -20,7 +20,7 @@ app.use(cors(corsOptions));
 var db = require('./app/config/db.config.js'); // подключение настроек базы данных
 const passport = require('passport');
 
-db.sequelize.sync({ force: false });
+db.sequelize.sync({ force: true });
 
 app.use('/', authRoutes);
 

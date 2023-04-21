@@ -8,10 +8,6 @@ module.exports = (sequelize, Sequelize) => {
                 primaryKey: true,
                 allowNull: false
             },
-            user_id: {
-                type: Sequelize.INTEGER(10),
-                allowNull: false
-            },
             name: {
                 type: Sequelize.STRING(100), // тип данных STRING (в MySQL — VARCHAR)
                 allowNull: false
