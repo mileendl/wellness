@@ -19,13 +19,13 @@ module.exports = (sequelize, Sequelize) => {
         });
 
     // Определяем связи таблицы user_category с другими таблицами
-    // TrainingProgram.associate = (models) => {
-    //     // Определение связи один-ко-многим с таблицей user. Это определение связи с одной стороны.
-    //     // Связь также определена со второй стороны (со стороны таблицы user): в файле user.model.js
-    //     TrainingProgram.belongsTo(models.user, {
-    //         foreignKey: 'user_id'
-    //     });
-    //     // TrainingProgram.hasMany()
-    // };
+    TrainingProgram.associate = (models) => {
+        // Определение связи один-ко-многим с таблицей user. Это определение связи с одной стороны.
+        // Связь также определена со второй стороны (со стороны таблицы user): в файле user.model.js
+
+        TrainingProgram.hasMany(models.exercise, {
+            foreignKey: 'training_program_id'
+        })
+    };
     return TrainingProgram;
 };

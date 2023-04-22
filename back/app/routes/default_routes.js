@@ -11,6 +11,13 @@ router.get('/get_training_programs', (req, res, next) => {
     })
 })
 
+router.get('/get_training_program', (req, res, next) => {
+    console.log(req.query.id)
+    db.training_program.findByPk(req.query.id, { include: db.exercise }).then((program) => {
+        res.json(program);
+    })
+})
+
 router.get('/defaultdata', (req, res, next) => {
     var default_data = {};
     db.health_indicator.findAll().then((indicators) => {

@@ -6,4 +6,16 @@ function getDefaultData() {
     })
 }
 
-export default { getDefaultData: getDefaultData }
+function getTrainingProgram(id) {
+    return http.get('/default/get_training_program', { params: { id: id } })
+        .then(response => {
+            return response.data;
+        }).catch(err => {
+            return err;
+        })
+}
+
+export default {
+    getDefaultData: getDefaultData,
+    getTrainingProgram: getTrainingProgram
+}

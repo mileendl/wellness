@@ -1,7 +1,7 @@
 <template>
     <div class="container-sm" style="max-width: 480px;">
 
-        <form class="m-4" @submit="handleLogin">
+        <form class="m-4">
             <h1 class="h3 mb-3 fw-normal align-self-center" style="text-align: center;">Вход в учетную запись</h1>
 
             <div class="mb-3">
@@ -20,7 +20,7 @@
           <input type="checkbox" id="checkRemember" value="remember-me" style="scale: 2; margin-right: 0.7rem;" v-model="rememberMe">
           <label class="form-label" for="checkRemember"> Запомнить меня</label>
         </div> -->
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+            <button class="w-100 btn btn-lg btn-primary" @click="handleLogin">Войти</button>
 
         </form>
     </div>
@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         //err
-        handleLogin(err) {
+        handleLogin: function (err) {
             err.preventDefault();
             this.message = '';
             // обращаемся к методу register, который определён в auth.service.js
