@@ -21,7 +21,7 @@
           <label class="form-label" for="checkRemember"> Запомнить меня</label>
         </div> -->
             <button class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
-           
+
         </form>
     </div>
 </template>
@@ -65,8 +65,8 @@ export default {
                 //Перенаправляет на календарь
                 this.$router.push('/calendar');
                 // this.successful = true;
-            }).catch((err)=>{
-                this.message =err.response.data;
+            }).catch((err) => {
+                this.message = err.response.data;
             })
         }
     }

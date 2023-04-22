@@ -48,14 +48,4 @@ router.post('/login', async (req, res, next) => {
     )(req, res, next)
 })
 
-router.get('/defaultdata', (req, res, next) =>{
-    var default_data = {};
-    db.health_indicator.findAll().then((indicators)=>{
-        console.log(indicators);
-        default_data.indicators = indicators;
-        res.json(default_data);
-    });
-
-})
-
 module.exports = router;

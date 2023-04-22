@@ -21,6 +21,10 @@
                     <li class="nav-item">
                         <router-link to="/chartDisplay" class="nav-link px-2 text-white">График</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link to="/trainingPrograms" class="nav-link px-2 text-white">
+                            Программы тренировок</router-link>
+                    </li>
                     <!-- <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
                             class="nav-link px-2 text-white">Pricing</a></li>
                     <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"

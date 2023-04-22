@@ -17,6 +17,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(500), // тип данных STRING (в MySQL — VARCHAR)
             allowNull: false
         },
+        norm: {
+            type: Sequelize.STRING(250), // тип данных STRING (в MySQL — VARCHAR)
+            allowNull: false
+        },
         img: {
             type: STRING,
             allowNull: true

@@ -3,6 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var authRoutes = require('./app/routes/auth.routes')
 var eventRoutes = require('./app/routes/event.routes')
+var defaultRoutes = require('./app/routes/default_routes')
 
 require('./app/auth/auth');
 
@@ -20,11 +21,13 @@ app.use(cors(corsOptions));
 var db = require('./app/config/db.config.js'); // подключение настроек базы данных
 const passport = require('passport');
 
-db.sequelize.sync({ force: true });
+db.sequelize.sync({ force: false });
 
-app.use('/', authRoutes);
+app.use('/auth', authRoutes);
 
-app.use('/events', passport.authenticate('jwt', { session: false }), eventRoutes)
+app.use('/events', passport.authenticate('jwt', { session: false }), eventRoutes);
+
+app.use('/default', defaultRoutes)
 
 app.listen(3000);
 
