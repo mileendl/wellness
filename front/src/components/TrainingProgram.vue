@@ -88,7 +88,6 @@ export default {
     beforeMount: function () {
         getProgram(this.$route.params.id).then((res) => {
             this.program = res;
-            console.log(res)
         });
     }
 }
