@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
             description: {
                 type: Sequelize.STRING(100), // тип данных STRING (в MySQL — VARCHAR)
                 allowNull: true
+            },
+            img_folder:{
+                type: Sequelize.STRING(100),
             }
         });
 

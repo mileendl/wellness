@@ -27,7 +27,11 @@ app.use('/auth', authRoutes);
 
 app.use('/events', passport.authenticate('jwt', { session: false }), eventRoutes);
 
-app.use('/default', defaultRoutes)
+app.use('/default', defaultRoutes);
+
+// console.log(__dirname + '/resources');
+//Для доступа к изображениям
+app.use(express.static(__dirname + '/resources'))
 
 app.listen(3000);
 

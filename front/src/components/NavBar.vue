@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="width: 100%;" aria-label="Navbar">
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">Wellness</router-link>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarProper"
