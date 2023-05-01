@@ -46,6 +46,12 @@ module.exports = (sequelize, Sequelize) => {
             onUpdate: 'CASCADE',
             sourceKey: 'id'
         });
+        User.hasMany(models.event, {
+            foreignKey: 'user_id',
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+            sourceKey: 'id'
+        })
 
     };
 

@@ -48,7 +48,8 @@ db.training_program = require('../model/training_program.model.js')(sequelize, S
 db.medication = require('../model/medication.model.js')(sequelize, Sequelize);
 db.health_indicator = require('../model/health_indicator.model.js')(sequelize, Sequelize);
 db.exercise = require('../model/exercise.model.js')(sequelize, Sequelize);
-
+db.event = require('../model/event.model.js')(sequelize, Sequelize)
+db.tag = require('../model/event_tag.model.js')(sequelize, Sequelize)
 // Связывание моделей без импорта файлов (то есть, чтобы в файле описания любой модели можно было
 // обращаться к другим моделям по имени без необходимости импорта в виде require(...))
 Object.keys(db).forEach(key => {

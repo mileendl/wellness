@@ -28,6 +28,7 @@ export default {
     },
     mounted: function () {
         this.programs = this.getPrograms();
+        console.log(this.$store.getDefaultData)
     }
 }
 </script>

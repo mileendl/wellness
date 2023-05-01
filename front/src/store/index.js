@@ -21,6 +21,7 @@ const store = createStore({
         loadDefaultData({ commit }, dd) {
             return ddService.getDefaultData().then(
                 data => {
+                    console.log(data)
                     commit('setDefaultData', data);
                     return Promise.resolve(dd);
                 }
