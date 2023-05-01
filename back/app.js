@@ -5,14 +5,13 @@ var authRoutes = require('./app/routes/auth.routes')
 var eventRoutes = require('./app/routes/event.routes')
 var defaultRoutes = require('./app/routes/default_routes')
 
-require('./app/auth/auth');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 var cors = require('cors');
 var corsOptions = {
-    origin: '*', //Любое происхождение приемлимо
+    origin: 'http://192.168.3.26:8080', //Любое происхождение приемлимо
     credentials: true, // разрешаем обрабатывать запросы
     optionSuccessStatus: 200 // при успешной обработке запроса будет возвращён статус 200
 };
@@ -23,6 +22,7 @@ const passport = require('passport');
 
 db.sequelize.sync({ force: false });
 
+require('./app/auth/auth');
 app.use('/auth', authRoutes);
 
 app.use('/events', passport.authenticate('jwt', { session: false }), eventRoutes);
