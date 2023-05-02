@@ -1,8 +1,8 @@
 const { STRING, DOUBLE, DATE } = require("sequelize");
 
 module.exports = (sequelize, Sequelize) => {
-    var Exercise = sequelize.define(
-        'exercise', {
+    var Event = sequelize.define(
+        'event', {
         id: {
             type: Sequelize.INTEGER(10),
             autoIncrement: true,
@@ -14,22 +14,21 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         description: {
-            type: Sequelize.STRING(500), // тип данных STRING (в MySQL — VARCHAR)
+            type: Sequelize.STRING(200), // тип данных STRING (в MySQL — VARCHAR)
             allowNull: false
         },
-        norm: {
-            type: Sequelize.STRING(250), // тип данных STRING (в MySQL — VARCHAR)
+        datetime: {
+            type: DATE,
             allowNull: false
-        },
-        img: {
-            type: STRING,
-            allowNull: true
         }
     });
-    Exercise.associate = (models) => {
-        Exercise.belongsTo(models.training_program, {
-            foreignKey: 'training_program_id'
+    Event.associate = (models) => {
+        Event.belongsTo(models.user, {
+            foreignKey: 'user_id'
         });
+        Event.belongsTo(models.tag, {
+            foreignKey: 'tag_id'
+        })
     };
-    return Exercise;
+    return Event;
 }

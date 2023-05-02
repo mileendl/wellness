@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="width: 100%;" aria-label="Navbar">
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">Wellness</router-link>
             <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarProper"
@@ -11,23 +11,20 @@
                 <!-- <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"> -->
 
                 <!-- Только для аутентифицированных бро -->
-                <ul class="navbar-nav me-auto mb-2 mb-md-0" v-if="currentUser">
-                    <li class="nav-item">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item" v-if="currentUser">
                         <router-link to="/calendar" class="nav-link px-2 text-secondary">Календарь</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="currentUser">
                         <router-link to="/addHealthRecord" class="nav-link px-2 text-white">Добавить значение</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="currentUser">
                         <router-link to="/chartDisplay" class="nav-link px-2 text-white">График</router-link>
                     </li>
-                    <!-- <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
-                            class="nav-link px-2 text-white">Pricing</a></li>
-                    <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
-                            class="nav-link px-2 text-white">FAQs</a>
+                    <li class="nav-item">
+                        <router-link to="/trainingPrograms" class="nav-link px-2 text-white">
+                            Программы тренировок</router-link>
                     </li>
-                    <li class="nav-item"><a href="https://getbootstrap.com/docs/5.3/examples/headers/#"
-                            class="nav-link px-2 text-white">About</a></li> -->
                 </ul>
 
                 <div v-if="currentUser" class="d-lg-flex justify-content-lg-end mb-2 mb-md-0">

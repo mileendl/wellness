@@ -6,7 +6,7 @@ function login(user) {
         username: user.username,
         password: user.password
     }
-    return http.post('/login', loginData).then(response => {
+    return http.post('auth/login', loginData).then(response => {
         if (response.data.accessToken) {
             localStorage.setItem('userData', JSON.stringify(response.data))
         }
@@ -23,7 +23,7 @@ function register(user) {
         password: user.password,
         name: user.name
     }
-    return http.post('/register', registerData).then(response => {
+    return http.post('auth/register', registerData).then(response => {
         if (response.status == 200) {
             if (response.data.accessToken) {
                 localStorage.setItem('userData', JSON.stringify(response.data))

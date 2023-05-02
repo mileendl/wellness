@@ -5,6 +5,8 @@ import AddUser from "./components/AddUser";
 import ChartDisplay from "./components/ChartDisplay";
 import LogIn from "./components/LogIn"
 import HealthRecordCreate from "./components/HealthRecordCreate"
+import TrainingProgram from './components/TrainingProgram';
+import TrainingPrograms from './components/TrainingPrograms';
 
 // определяем маршруты
 const routes = [
@@ -48,6 +50,18 @@ const routes = [
             title: "Добавление значения"
         }
     },
+    {
+        path: "/trainingPrograms",
+        name: "training-programs",
+        component: TrainingPrograms,
+        meta: { title: 'Тренировочные программы' }
+    },
+    {
+        path: "/trainingProgram/:id",
+        name: "trainingProgram",
+        component: TrainingProgram,
+        meta: { title: 'Тренировочная программа' }
+    }
 ];
 
 const router = createRouter({
