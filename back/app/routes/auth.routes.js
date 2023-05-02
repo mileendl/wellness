@@ -4,6 +4,8 @@ var passport = require('passport');
 const jwt = require('jsonwebtoken');
 const authConfig = require("../config/auth.config");
 
+const db = require('../config/db.config')
+
 function authRespoonse(req, res, err, user, info) {
     try {
         // console.log(user)

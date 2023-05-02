@@ -5,16 +5,6 @@ var initialState = userData
     ? { status: { loggedIn: true }, user: userData.user, accessToken: userData.accessToken }
     : { status: { loggedIn: false }, user: null, accessToken: null };
 
-// var initialState;
-// if (userData) {
-//     initialState = { status: { loggedIn: true }, user: userData.user, accessToken: ''}
-//     if (userData.accessToken) {
-//         initialState.accessToken = userData.accessToken
-//     }
-// } else{
-
-// }
-
 const auth = {
     namespaced: true,
     state: initialState,

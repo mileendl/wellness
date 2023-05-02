@@ -12,6 +12,6 @@ const app = createApp(App);
 app.use(router);
 app.use(store);
 
-// console.log(store)
+store.dispatch('loadDefaultData');
 
-app.mount('#app')
+app.mount('#app');

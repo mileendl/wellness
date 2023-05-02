@@ -2,7 +2,11 @@ import { createWebHistory, createRouter } from "vue-router";
 // импорт компонентов
 import Calendar from "./components/CalendarPage";
 import AddUser from "./components/AddUser";
+import ChartDisplay from "./components/ChartDisplay";
 import LogIn from "./components/LogIn"
+import HealthRecordCreate from "./components/HealthRecordCreate"
+import TrainingProgram from './components/TrainingProgram';
+import TrainingPrograms from './components/TrainingPrograms';
 
 // определяем маршруты
 const routes = [
@@ -23,6 +27,14 @@ const routes = [
         }
     },
     {
+        path: "/chartdisplay",
+        name: "chart-display",
+        component: ChartDisplay,
+        meta: {
+            title: "График",
+        }
+    },
+    {
         path: "/logIn",
         name: "login",
         component: LogIn,
@@ -30,6 +42,26 @@ const routes = [
             title: "Вход в учетную запись"
         }
     },
+    {
+        path: "/addHealthRecord",
+        name: "add-health-record",
+        component: HealthRecordCreate,
+        meta: {
+            title: "Добавление значения"
+        }
+    },
+    {
+        path: "/trainingPrograms",
+        name: "training-programs",
+        component: TrainingPrograms,
+        meta: { title: 'Тренировочные программы' }
+    },
+    {
+        path: "/trainingProgram/:id",
+        name: "trainingProgram",
+        component: TrainingProgram,
+        meta: { title: 'Тренировочная программа' }
+    }
 ];
 
 const router = createRouter({
