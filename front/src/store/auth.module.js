@@ -13,6 +13,7 @@ const auth = {
             return AuthService.login(user).then(
                 data => {
                     commit('loginSuccess', data);
+                    commit('setUserData', data.userData, { root: true })
                     return Promise.resolve(user);
                 },
                 error => {
