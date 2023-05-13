@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var authRoutes = require('./app/routes/auth.routes')
-var eventRoutes = require('./app/routes/event.routes')
+var eventRoutes = require('./app/routes/event_records.routes')
 var defaultRoutes = require('./app/routes/default_routes')
 
 

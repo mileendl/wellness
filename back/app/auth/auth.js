@@ -72,7 +72,6 @@ passport.use(new JWTStrategy(
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     },
     async (token, done) => {
-        console.log('TOKEN')
         try { return done(null, token.user); }
         catch (err) {
             console.log(err)

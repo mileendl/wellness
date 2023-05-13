@@ -37,7 +37,6 @@ export default {
                 password: '',
             },
             message: '',
-
         }
     },
     //Вычисляемые динамически переменные
@@ -63,7 +62,7 @@ export default {
                 this.message = data.msg;
                 console.log(data);
                 //Перенаправляет на календарь
-                this.$router.push('/calendar');
+                window.location.href = '/calendar';
                 // this.successful = true;
             }).catch((err) => {
                 this.message = err.response.data;

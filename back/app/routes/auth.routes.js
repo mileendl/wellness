@@ -4,7 +4,7 @@ var passport = require('passport');
 const jwt = require('jsonwebtoken');
 const authConfig = require("../config/auth.config");
 
-const db = require('../config/db.config')
+const userController = require('../repository/events_records.repository');
 
 function authRespoonse(req, res, err, user, info) {
     try {
@@ -24,9 +24,11 @@ function authRespoonse(req, res, err, user, info) {
             const token = jwt.sign({ user: body }, authConfig.secret, { expiresIn: authConfig.expiration });
 
             //Простой delete не удаляет поле из объекта-экземпляра прототипа
-            user.password = undefined
+            user.password = undefined;
+            var userData = await userController.getAllEventsAndRecordsByUser(user.username);
+
             //Здесь в json собираются все данные, которые надо передать клиенту после успешной авторизации
-            return res.json({ accessToken: token, user: user });
+            return res.json({ accessToken: token, user: user, userData: userData });
         })
     } catch (err) {
         //Сообщаем об ошибке сервера - что-то сломалось

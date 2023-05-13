@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.INTEGER(10),
                 allowNull: false
             },
-            date: {
+            datetime: {
                 type: DATE,
                 allowNull: false
             }

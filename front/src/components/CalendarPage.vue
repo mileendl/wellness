@@ -1,5 +1,5 @@
 <template>
-  <FullCalendar class='demo-app-calendar' :options="calendarOptions" />
+  <FullCalendar ref="fullCalendar" class='demo-app-calendar' :options="calendarOptions" />
 
   <!-- Modal -->
   <div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="recordModal" aria-hidden="true">
@@ -12,7 +12,8 @@
         <div class="modal-body">
 
           <form>
-            <div class="mb-3">
+            <!-- Нельзя менять вид записи, иначе будете бебе с бэдэ (разные таблицы) -->
+            <div class="mb-3" v-if="currentModal.isNewRecord">
               <label for="data-type" class="col-form-label">Вид записи:</label>
               <select v-model="currentModal.dataType" id="data-type" class="form-select">
                 <option value="health-record">Состояние здоровья</option>
@@ -77,6 +78,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import multimonthPlugin from '@fullcalendar/multimonth'
 import bootstrap from 'bootstrap/dist/js/bootstrap'
+import erService from '../services/events_records.service'
 
 var modal;
 
@@ -103,12 +105,8 @@ export default {
         nowIndicator: true,
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
+        initialEvents: []
         // eventsSet: this.handleEvents,
-        /* you can update a remote database when these fire:
-                eventAdd:
-                eventChange:
-                eventRemove:
-                */
       },
       hr_tags: [],
       health_indicators: [],
@@ -124,6 +122,7 @@ export default {
   },
   methods: {
     handleDateSelect(selectInfo) {
+      this.currentModal.isNewRecord = true;
       modal.show();
       let calendarApi = selectInfo.view.calendar;
       calendarApi.unselect(); // clear date selection
@@ -131,52 +130,66 @@ export default {
     },
     handleSave() {
       let calendarApi = this.selectInfo.view.calendar;
+      var obj = null;
       //Новый ивент
-      if (!this.clickInfo) {
+      if (this.currentModal.isNewRecord) {
+        var color = '';
+        var title = '';
         if (this.currentModal.dataType == "event") {
-          calendarApi.addEvent({
-            obj: this.currentModal.event,
-            type: 'event',
-
-            title: this.currentModal.event.name,
-            start: this.selectInfo.startStr,
-            end: this.selectInfo.endStr,
-            allDay: this.selectInfo.allDay,
-            color: this.currentModal.event.tag.color
-          })
+          obj = this.currentModal.event;
+          color = this.currentModal.event.tag.color;
+          title = this.currentModal.event.name;
         }
         if (this.currentModal.dataType == "health-record") {
-          calendarApi.addEvent({
-            obj: this.currentModal.hr,
-            type: 'health-record',
+          obj = this.currentModal.hr;
+          color = 'red';
+          title = this.currentModal.hr.indicator.data_type;
+        }
 
-            title: this.currentModal.hr.indicator.data_type,
+        obj.datetime = this.selectInfo.start;
+        this.save(obj).then((res) => {
+          console.log(res);
+          obj.id = res.data;
+
+          calendarApi.addEvent({
+            obj: obj,
+            type: this.currentModal.dataType,
+
+            title: title,
             start: this.selectInfo.startStr,
             end: this.selectInfo.endStr,
             allDay: this.selectInfo.allDay,
-            color: 'red'
+            color: color
           })
-        }
+          modal.hide();
+        });
+
       } else { //Редактируется существующий ивент
         var event = this.clickInfo.event;
-
         event.setExtendedProp('type', this.currentModal.dataType);
+
         if (this.currentModal.dataType == 'health-record') {
-          event.setExtendedProp('obj', this.currentModal.hr);
           event.setProp('title', this.currentModal.hr.indicator.data_type);
           event.setProp('color', 'red');
-
+          obj = this.currentModal.hr
         }
         if (this.currentModal.dataType == 'event') {
-          event.setExtendedProp('obj', this.currentModal.event);
           event.setProp('title', this.currentModal.event.name);
           event.setProp('color', this.currentModal.event.tag.color);
+          obj = this.currentModal.event;
         }
-
+        obj.datetime = this.clickInfo.start;
+        this.save(obj).then((res) => {
+          console.log(res)
+          obj.id = res.data;
+          event.setExtendedProp('obj', obj);
+          modal.hide();
+        });
       }
-      modal.hide();
     },
     handleEventClick(clickInfo) {
+      this.currentModal.isNewRecord = false;
+
       modal.show();
       const event = clickInfo.event.extendedProps;
       console.log(event)
@@ -192,19 +205,70 @@ export default {
 
     },
     handleDelete() {
-      this.clickInfo.event.remove();
-      modal.hide();
+      this.delete(this.clickInfo.event.obj).then(() => {
+        this.clickInfo.event.remove();
+        modal.hide();
+      })
     },
     getHRTags() {
       return this.$store.getters.getDefaultData.tags;
     },
     getHealthIndicators() {
       return this.$store.getters.getDefaultData.health_indicators;
+    },
+    getEvents() {
+      return this.$store.getters.getEvents;
+
+    },
+    getHealthRecords() {
+      return this.$store.getters.getHealthRecords;
+    },
+    async save(obj) {
+      if (this.currentModal.dataType == 'event') {
+        return await this.saveEvent(obj);
+      }
+      if (this.currentModal.dataType == 'health-record') {
+        return await this.saveHealthRecord(obj);
+      }
+    },
+    async saveEvent(obj) {
+      return await erService.saveEvent(obj);
+    },
+    async saveHealthRecord(obj) {
+      return await erService.saveHealthRecord(obj);
+    },
+    async delete(obj) {
+      if (this.currentModal.dataType == 'event') {
+        await this.deleteEvent(obj);
+      }
+      if (this.currentModal.dataType == 'health-record') {
+        await this.deleteHealthRecord(obj);
+      }
+    },
+    async deleteEvent(obj) {
+      await erService.deleteEvent(obj).then(data => {
+        console.log(data);
+      })
+    },
+    async deleteHealthRecord(obj) {
+      await erService.deleteHealthRecord(obj).then(data => {
+        console.log(data);
+      })
     }
   },
   mounted: function () {
     this.hr_tags = this.getHRTags();
     this.health_indicators = this.getHealthIndicators();
+    this.getHealthRecords();
+    this.getEvents();
+
+    let calendarApi = this.$refs.fullCalendar.getApi();
+
+    erService.getAllEventsAndRecords().then(res => {
+      console.log(res)
+      calendarApi.addEventSource(res.events);
+    })
+
 
     var mt = document.querySelector('#recordModal');
     modal = bootstrap.Modal.getOrCreateInstance(mt);
