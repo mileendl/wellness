@@ -32,9 +32,9 @@ module.exports = (sequelize, Sequelize) => {
         HealthRecord.belongsTo(models.user, {
             foreignKey: 'user_id'
         });
-
-
-        // HealthRecord.hasOne(models.);
+        HealthRecord.belongsTo(models.health_indicator, {
+            foreignKey: 'indicator_id'
+        });
     };
     return HealthRecord;
 };

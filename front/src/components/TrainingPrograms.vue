@@ -1,13 +1,11 @@
 <template>
-    <div class="container">
-        <h2 class="display-6">Программы тренировок</h2>
-        <ul class="list-group list-group-flush list-group-item-action">
+    <h2 class="display-6">Программы тренировок</h2>
+    <ul class="list-group list-group-flush list-group-item-action">
 
-            <router-link class="list-group-item list-group-item-action" v-for="program in programs" v-bind:key="program.id"
-                :to="{ name: 'trainingProgram', params: { id: program.id } }" v-text="program.name"></router-link>
+        <router-link class="list-group-item list-group-item-action" v-for="program in programs" v-bind:key="program.id"
+            :to="{ name: 'trainingProgram', params: { id: program.id } }" v-text="program.name"></router-link>
 
-        </ul>
-    </div>
+    </ul>
 </template>
 <script>
 

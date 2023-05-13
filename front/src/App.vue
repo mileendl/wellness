@@ -1,6 +1,8 @@
 <template>
   <NavBar />
-  <router-view class="container my-4" />
+  <div class="container my-4">
+    <router-view />
+  </div>
 </template>
 <script>
 import NavBar from './components/NavBar'
