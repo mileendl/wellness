@@ -82,6 +82,38 @@ import erService from '../services/events_records.service'
 
 var modal;
 
+// {
+//             obj: obj,
+//             type: this.currentModal.dataType,
+
+//             title: title,
+//             start: this.selectInfo.startStr,
+//             end: this.selectInfo.endStr,
+//             allDay: this.selectInfo.allDay,
+//             color: color
+//           }
+
+function eventToFCEvent(event) {
+  var res = {
+    obj: event,
+    type: 'event',
+    title: event.name,
+    start: event.datetime,
+    color: event.tag.color,
+  }
+  return res;
+}
+function hrToFCEvent(healthRecord) {
+  var res = {
+    obj: healthRecord,
+    type: 'health-record',
+    title: healthRecord.health_indicator.data_type,
+    start: healthRecord.datetime,
+    color: 'red',
+  }
+  return res;
+}
+
 export default {
   components: {
     FullCalendar // make the <FullCalendar> tag available
@@ -105,7 +137,7 @@ export default {
         nowIndicator: true,
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
-        initialEvents: []
+        // initialEvents: []
         // eventsSet: this.handleEvents,
       },
       hr_tags: [],
@@ -265,8 +297,19 @@ export default {
     let calendarApi = this.$refs.fullCalendar.getApi();
 
     erService.getAllEventsAndRecords().then(res => {
-      console.log(res)
-      calendarApi.addEventSource(res.events);
+      console.log(res);
+
+      var events = [];
+      var hrs = [];
+      for (var item of res.data.events) {
+        events.push(eventToFCEvent(item));
+      }
+      for (let i = 0; i < res.data.healthRecords.length; i++) {
+        hrs.push(hrToFCEvent(res.data.healthRecords[i]));
+      }
+      calendarApi.addEventSource(events);
+      calendarApi.addEventSource(hrs);
+
     })
 
 

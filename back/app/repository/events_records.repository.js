@@ -2,7 +2,7 @@ var db = require('../config/db.config.js');
 
 async function getAllEventsAndRecordsByUserId(id) {
     const events = await db.event.findAll({ include: db.tag, where: { user_id: id } });
-    const healthRecords = await db.health_record_item.findAll({ where: { user_id: id } });
+    const healthRecords = await db.health_record_item.findAll({ include: db.health_indicator, where: { user_id: id } });
     var data = { healthRecords: healthRecords, events: events };
     return data;
 }
