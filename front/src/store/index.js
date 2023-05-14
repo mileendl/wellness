@@ -32,10 +32,10 @@ const store = createStore({
         getDefaultData(state) {
             return state.defaultdata;
         },
-        getHealthRecords(state){
+        getHealthRecords(state) {
             return state.healthRecords;
         },
-        getEvents(state){
+        getEvents(state) {
             return state.events;
         }
     },
@@ -49,17 +49,6 @@ const store = createStore({
                 }
             );
         },
-        // saveEvent({ commit }, event) {
-        //     console.log(event)
-        //     erService.saveEvent(event).then(data => {
-        //         return data;
-        //     })
-        // },
-        // saveHealthRecord(, health_record) {
-        //     erService.saveHealthRecord(health_record).then(data => {
-        //         return data;
-        //     })
-        // }
     }
 });
 export default store;

@@ -82,17 +82,6 @@ import erService from '../services/events_records.service'
 
 var modal;
 
-// {
-//             obj: obj,
-//             type: this.currentModal.dataType,
-
-//             title: title,
-//             start: this.selectInfo.startStr,
-//             end: this.selectInfo.endStr,
-//             allDay: this.selectInfo.allDay,
-//             color: color
-//           }
-
 function eventToFCEvent(event) {
   var res = {
     obj: event,
@@ -137,8 +126,6 @@ export default {
         nowIndicator: true,
         select: this.handleDateSelect,
         eventClick: this.handleEventClick,
-        // initialEvents: []
-        // eventsSet: this.handleEvents,
       },
       hr_tags: [],
       health_indicators: [],
@@ -182,7 +169,6 @@ export default {
         this.save(obj).then((res) => {
           console.log(res);
           obj.id = res.data;
-
           calendarApi.addEvent({
             obj: obj,
             type: this.currentModal.dataType,
@@ -234,7 +220,6 @@ export default {
         this.currentModal.hr = event.obj;
       }
       this.clickInfo = clickInfo;
-
     },
     handleDelete() {
       this.delete(this.clickInfo.event.obj).then(() => {
@@ -248,13 +233,12 @@ export default {
     getHealthIndicators() {
       return this.$store.getters.getDefaultData.health_indicators;
     },
-    getEvents() {
-      return this.$store.getters.getEvents;
-
-    },
-    getHealthRecords() {
-      return this.$store.getters.getHealthRecords;
-    },
+    // getEvents() {
+    //   return this.$store.getters.getEvents;
+    // },
+    // getHealthRecords() {
+    //   return this.$store.getters.getHealthRecords;
+    // },
     async save(obj) {
       if (this.currentModal.dataType == 'event') {
         return await this.saveEvent(obj);
@@ -291,14 +275,11 @@ export default {
   mounted: function () {
     this.hr_tags = this.getHRTags();
     this.health_indicators = this.getHealthIndicators();
-    this.getHealthRecords();
-    this.getEvents();
 
     let calendarApi = this.$refs.fullCalendar.getApi();
 
     erService.getAllEventsAndRecords().then(res => {
       console.log(res);
-
       var events = [];
       var hrs = [];
       for (var item of res.data.events) {
@@ -309,9 +290,7 @@ export default {
       }
       calendarApi.addEventSource(events);
       calendarApi.addEventSource(hrs);
-
     })
-
 
     var mt = document.querySelector('#recordModal');
     modal = bootstrap.Modal.getOrCreateInstance(mt);

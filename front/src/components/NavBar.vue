@@ -81,7 +81,7 @@ export default {
         },
         logOut() {
             this.$store.dispatch('auth/logout');
-            this.$router.push('/');
+            window.location.href = '/';
         },
         register() {
             this.$router.push('/addUser');
