@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top" style="width: 100%;" aria-label="Navbar">
         <div class="container-fluid">
             <router-link class="navbar-brand" to="/">Wellness</router-link>
-            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarProper"
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarProper"
                 aria-controls="navbarProper" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -13,16 +13,13 @@
                 <!-- Только для аутентифицированных бро -->
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item" v-if="currentUser">
-                        <router-link to="/calendar" class="nav-link px-2 text-secondary">Календарь</router-link>
+                        <router-link to="/calendar" class="nav-link px-2" active-class="active">Календарь</router-link>
                     </li>
                     <li class="nav-item" v-if="currentUser">
-                        <router-link to="/addHealthRecord" class="nav-link px-2 text-white">Добавить значение</router-link>
-                    </li>
-                    <li class="nav-item" v-if="currentUser">
-                        <router-link to="/chartDisplay" class="nav-link px-2 text-white">График</router-link>
+                        <router-link to="/chartDisplay" class="nav-link px-2" active-class="active">График</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link to="/trainingPrograms" class="nav-link px-2 text-white">
+                        <router-link to="/trainingPrograms" class="nav-link px-2" active-class="active">
                             Программы тренировок</router-link>
                     </li>
                 </ul>

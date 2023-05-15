@@ -4,7 +4,6 @@ import Calendar from "./components/CalendarPage";
 import AddUser from "./components/AddUser";
 import ChartDisplay from "./components/ChartDisplay";
 import LogIn from "./components/LogIn"
-import HealthRecordCreate from "./components/HealthRecordCreate"
 import TrainingProgram from './components/TrainingProgram';
 import TrainingPrograms from './components/TrainingPrograms';
 
@@ -40,14 +39,6 @@ const routes = [
         component: LogIn,
         meta: {
             title: "Вход в учетную запись"
-        }
-    },
-    {
-        path: "/addHealthRecord",
-        name: "add-health-record",
-        component: HealthRecordCreate,
-        meta: {
-            title: "Добавление значения"
         }
     },
     {
