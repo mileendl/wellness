@@ -6,6 +6,15 @@
       :data="chartData"
       />
     </div>
+    <div>
+      <form>
+        <label for="indicator-select">Choose a pet:</label>
+        <select name="indicators" id="indicator-select">
+          <option v-for="indicator in health_indicators" :key="indicator.id">{{indicator.data_type+","+ indicator.unit}}</option>
+        </select>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
   </template>
   <script>
   import { Line } from 'vue-chartjs'
@@ -42,7 +51,8 @@
             ],
             borderWidth: 2
           }]
-        }
+        },
+        health_indicators: this.$store.getters.getDefaultData.indicators
       }
     }
   }

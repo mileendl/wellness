@@ -15,7 +15,17 @@ function getTrainingProgram(id) {
         })
 }
 
+function getHealthRecord(id) {
+    return http.get('/default/get_health_record', { params: { id: id } })
+        .then(response => {
+            return response.data;
+        }).catch(err => {
+            return err;
+        })
+}
+
 export default {
     getDefaultData: getDefaultData,
-    getTrainingProgram: getTrainingProgram
+    getTrainingProgram: getTrainingProgram,
+    getHealthRecord: getHealthRecord
 }

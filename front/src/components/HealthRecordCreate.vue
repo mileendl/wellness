@@ -3,9 +3,9 @@
         <span>Введите для какого :</span>
         <p style="white-space: pre-line;">{{ message }}</p>
         <div id="app">
-            <input type="text" v-model="film" list="health_indicators">
+            <input type="text" v-model="indicator" list="health_indicators">
             <datalist id="health_indicators">
-                <option v-for="film in health_indicators" :key="film.id">{{film.data_type+","+ film.unit}}</option>
+                <option v-for="indicator in health_indicators" :key="indicator.id">{{indicator.data_type+","+ indicator.unit}}</option>
             </datalist>
         </div>
         <input v-model="message" placeholder="введите данные">

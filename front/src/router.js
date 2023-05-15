@@ -7,6 +7,7 @@ import LogIn from "./components/LogIn"
 import HealthRecordCreate from "./components/HealthRecordCreate"
 import TrainingProgram from './components/TrainingProgram';
 import TrainingPrograms from './components/TrainingPrograms';
+import HealthRecords from './components/HealthRecords';
 
 // определяем маршруты
 const routes = [
@@ -61,6 +62,12 @@ const routes = [
         name: "trainingProgram",
         component: TrainingProgram,
         meta: { title: 'Тренировочная программа' }
+    },
+    {
+        path: "/healthRecords",
+        name: "healthRecords",
+        component: HealthRecords,
+        meta: { title: 'Записи о здоровье' }
     }
 ];
 
