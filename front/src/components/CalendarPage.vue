@@ -11,48 +11,67 @@
         </div>
         <div class="modal-body">
 
-          <form>
+          <form class="needs-validation" id="eventForm" novalidate>
             <!-- Нельзя менять вид записи, иначе будете бебе с бэдэ (разные таблицы) -->
             <div class="mb-3" v-if="currentModal.isNewRecord">
               <label for="data-type" class="col-form-label">Вид записи:</label>
-              <select v-model="currentModal.dataType" id="data-type" class="form-select">
+              <select v-model="currentModal.dataType" id="data-type" class="form-select" required>
                 <option value="health-record">Состояние здоровья</option>
                 <option value="event">Событие/напоминание</option>
               </select>
+              <div class="invalid-feedback">
+                Пожалуйста, выберите значение!
+              </div>
             </div>
 
             <div v-if="currentModal.dataType == 'health-record'">
               <div class="mb-3">
                 <label for="health-indicator" class="col-form-label">Показатель:</label>
-                <select v-model="currentModal.hr.indicator" id="health-indicator" class="form-select">
+                <select v-model="currentModal.hr.indicator" id="health-indicator" class="form-select" required>
                   <option v-for="indicator in health_indicators" v-text="indicator.data_type" v-bind:value="indicator"
                     v-bind:key="indicator.id">
                   </option>
                 </select>
+                <div class="invalid-feedback">
+                  Пожалуйста, выберите значение!
+                </div>
               </div>
               <div class="mb-3">
                 <label for="hr_value" class="col-form-label">Значение:</label>
-                <input type="text" class="form-control" id="hr_value" v-model="currentModal.hr.value" />
+                <input type="number" class="form-control" id="hr_value" v-model="currentModal.hr.value" required />
                 <span v-if="currentModal.hr.indicator.unit" class="form-text"
                   v-text="currentModal.hr.indicator.unit"></span>
+                <div class="invalid-feedback">
+                  Введите число!
+                </div>
               </div>
             </div>
 
             <div v-if="currentModal.dataType == 'event'">
               <div class="mb-3">
                 <label for="event-name" class="col-form-label">Название:</label>
-                <input type="text" class="form-control" id="event-name" v-model="currentModal.event.name">
+                <input type="text" class="form-control" id="event-name" v-model="currentModal.event.name" required>
+                <div class="invalid-feedback">
+                  Название не может быть пустым!
+                </div>
               </div>
               <div class="mb-3">
                 <label for="event-tag" class="col-form-label">Тег:</label>
-                <select v-model="currentModal.event.tag" id="event-tag" class="form-select">
+                <select v-model="currentModal.event.tag" id="event-tag" class="form-select" required>
                   <option v-for="tag in hr_tags" v-text="tag.name" v-bind:value="tag" v-bind:key="tag.id">
                   </option>
                 </select>
+                <div class="invalid-feedback">
+                  Пожалуйста, выберите значение!
+                </div>
               </div>
               <div class="mb-3">
                 <label for="event-description" class="col-form-label">Описание:</label>
-                <textarea class="form-control" id="event-description" v-model="currentModal.event.description"></textarea>
+                <textarea class="form-control" id="event-description" v-model="currentModal.event.description"
+                  required></textarea>
+                <div class="invalid-feedback">
+                  Описание не может быть пустым!
+                </div>
               </div>
             </div>
 
@@ -150,6 +169,12 @@ export default {
     },
     //Сохранение
     handleSave() {
+      const form = document.getElementById('eventForm');
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return null;
+      }
+
       let calendarApi = this.selectInfo.view.calendar;
       var obj = null;
       //Новый ивент

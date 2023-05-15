@@ -24,7 +24,6 @@ ax.interceptors.response.use(function (response) {
   return response;
 
 }, function (error) {
-  console.log(error.response);
   if (error.response.status == 401) {
     store.dispatch('auth/logout')
     window.location.href = '/login';
