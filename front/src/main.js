@@ -12,6 +12,8 @@ const app = createApp(App);
 app.use(router);
 app.use(store);
 
-store.dispatch('loadDefaultData');
-
-app.mount('#app');
+//Сначала получаем данные, потом монтируем (иначе теги и показатели, например, не успевают загрузиться)
+store.dispatch('loadDefaultData').then(() => {
+    app.mount('#app');
+});
+// app.mount('#app');

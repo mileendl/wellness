@@ -40,14 +40,9 @@ const store = createStore({
         }
     },
     actions: {
-        loadDefaultData({ commit }, dd) {
-            return ddService.getDefaultData().then(
-                data => {
-                    console.log(data)
-                    commit('setDefaultData', data);
-                    return Promise.resolve(dd);
-                }
-            );
+        async loadDefaultData({ commit },) {
+            const data = await ddService.getDefaultData();
+            commit('setDefaultData', data);
         },
     }
 });

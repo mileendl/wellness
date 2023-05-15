@@ -16,11 +16,8 @@ export default {
             programs: [],
         }
     },
-    // created() {
-    // },
     methods: {
         getPrograms() {
-            // console.log(this.$store.getters.getDefaultData.training_programs);
             return this.$store.getters.getDefaultData.training_programs;
         }
     },
