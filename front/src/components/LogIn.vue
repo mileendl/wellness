@@ -6,20 +6,16 @@
 
             <div class="mb-3">
                 <label class="form-label" for="loginInput">Логин</label>
-                <input class="form-control" id="loginInput" placeholder="Login" v-model="user.username">
+                <input class="form-control" id="loginInput" placeholder="Login" v-model="user.username" required>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="floatingPassword">Пароль</label>
                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                    v-model="user.password">
+                    v-model="user.password" required>
             </div>
             <div class="form-group mb-3">
                 <div v-if="message" class="alert alert-danger">{{ message }}</div>
             </div>
-            <!-- <div class="checkbox mb-3 " style="text-align: center;">
-          <input type="checkbox" id="checkRemember" value="remember-me" style="scale: 2; margin-right: 0.7rem;" v-model="rememberMe">
-          <label class="form-label" for="checkRemember"> Запомнить меня</label>
-        </div> -->
             <button class="w-100 btn btn-lg btn-primary" @click="handleLogin">Войти</button>
 
         </form>
@@ -65,6 +61,7 @@ export default {
                 window.location.href = '/calendar';
                 // this.successful = true;
             }).catch((err) => {
+                console.log(err);
                 this.message = err.response.data;
             })
         }

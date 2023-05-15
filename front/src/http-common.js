@@ -2,7 +2,6 @@ import axios from "axios";
 
 import store from './store/index'
 
-
 var token = '';
 var user = JSON.parse(localStorage.getItem('userData'));
 
@@ -25,14 +24,12 @@ ax.interceptors.response.use(function (response) {
   return response;
 
 }, function (error) {
-  console.log(error.response)
-
+  console.log(error.response);
   if (error.response.status == 401) {
     store.dispatch('auth/logout')
     window.location.href = '/login';
-    console.log('aga')
   }
-  return error;
+  throw error;
 })
 
 export default ax;

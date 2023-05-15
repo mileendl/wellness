@@ -8,6 +8,7 @@ const userController = require('../repository/events_records.repository');
 
 function authRespoonse(req, res, err, user, info) {
     try {
+        console.log(info)
         // console.log(user)
         if (err || !user) {
             console.log(info)

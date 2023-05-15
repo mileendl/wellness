@@ -1,7 +1,6 @@
 import { createStore } from "vuex";
 import auth from './auth.module';
 import ddService from '../services/default_data.service';
-// import erService from '../services/events_records.service'
 
 const store = createStore({
     modules: {

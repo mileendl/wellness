@@ -19,7 +19,7 @@
       </div>
       <div class="mb-3">
         <label class="form-label" for="nameInput">ФИО</label>
-        <input class="form-control" id="nameInput" placeholder="Login" v-model="user.name">
+        <input class="form-control" id="nameInput" placeholder="ФИО" v-model="user.name">
       </div>
       <!-- <div class="checkbox mb-3 " style="text-align: center;">
         <input type="checkbox" id="checkRemember" value="remember-me" style="scale: 2; margin-right: 0.7rem;" v-model="rememberMe">
@@ -67,24 +67,18 @@ export default {
     }
   },
   methods: {
-    //err
-    handleRegister(err) {
-      err.preventDefault();
+    handleRegister(error) {
+      error.preventDefault();
       this.message = '';
       if (!this.passwordRepCorrect) {
         this.message = 'Введенные пароли не совпадают!';
         return;
       }
       // обращаемся к методу register, который определён в auth.service.js
-      this.$store.dispatch("auth/register", this.user).then(data => {
-        console.log(data);
-        this.message = data.message;
+      this.$store.dispatch("auth/register", this.user).then(() => {
+        // this.message = data.message;
         this.$router.push('/calendar');
-
-        // this.successful = true;
       }).catch(err => {
-        console.log(err)
-        // this.message = err.response.data;
         switch (err.response.status) {
           case 400: this.message = 'Пользователь с таким логином уже существует!';
             break;
@@ -93,8 +87,5 @@ export default {
       })
     }
   }
-  // props: {
-  //   msg: String
-  // }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <FullCalendar ref="fullCalendar" class='demo-app-calendar' :options="calendarOptions" />
 
-  <!-- Modal -->
+  <!-- Модальное окно для создания, редактирования, удаления записи -->
   <div class="modal fade" id="recordModal" tabindex="-1" aria-labelledby="recordModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -140,6 +140,7 @@ export default {
     }
   },
   methods: {
+    //Выбор даты (открывает диалоговое окно на создание ивента)
     handleDateSelect(selectInfo) {
       this.currentModal.isNewRecord = true;
       modal.show();
@@ -147,6 +148,7 @@ export default {
       calendarApi.unselect(); // clear date selection
       this.selectInfo = selectInfo;
     },
+    //Сохранение
     handleSave() {
       let calendarApi = this.selectInfo.view.calendar;
       var obj = null;
@@ -205,6 +207,7 @@ export default {
         });
       }
     },
+    //По нажатию на ивент всплывает диалоговое окно для редактирования
     handleEventClick(clickInfo) {
       this.currentModal.isNewRecord = false;
 
@@ -221,6 +224,7 @@ export default {
       }
       this.clickInfo = clickInfo;
     },
+    //Обрабатываем нажатие кнопки удаления
     handleDelete() {
       this.delete(this.clickInfo.event.obj).then(() => {
         this.clickInfo.event.remove();
@@ -292,9 +296,10 @@ export default {
       calendarApi.addEventSource(hrs);
     })
 
+
     var mt = document.querySelector('#recordModal');
     modal = bootstrap.Modal.getOrCreateInstance(mt);
-    mt.addEventListener('hidden.bs.modal', (/*event*/) => {
+    mt.addEventListener('hidden.bs.modal', () => {
       this.currentModal.hr = { indicator: {} };
       this.currentModal.event = {};
       this.clickInfo = null;

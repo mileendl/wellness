@@ -1,10 +1,6 @@
 import http from '../http-common'
 
 async function getAllEventsAndRecords() {
-    // return http.get('events/get_all_events_and_records').then(response => {
-    //     console.log(response)
-    //     return response;
-    // })
     var events = await http.get('events/get_all_events_and_records');
     console.log(events);
     return events;
@@ -35,9 +31,5 @@ async function deleteHealthRecord(health_record) {
 }
 
 export default {
-    getAllEventsAndRecords: getAllEventsAndRecords,
-    saveEvent: saveEvent,
-    saveHealthRecord: saveHealthRecord,
-    deleteEvent: deleteEvent,
-    deleteHealthRecord: deleteHealthRecord
+    getAllEventsAndRecords, saveEvent, saveHealthRecord, deleteEvent, deleteHealthRecord
 }

@@ -1,5 +1,4 @@
 import http from '../http-common'
-// import http from "axios"
 
 function login(user) {
     var loginData = {
@@ -8,9 +7,11 @@ function login(user) {
     }
     return http.post('auth/login', loginData).then(response => {
         if (response.data.accessToken) {
-            localStorage.setItem('userData', JSON.stringify(response.data))
+            localStorage.setItem('userData', JSON.stringify(response.data));
+            return response.data;
         }
-        return response.data;
+    }).catch(err => {
+        throw err;
     })
 }
 
@@ -26,16 +27,18 @@ function register(user) {
     return http.post('auth/register', registerData).then(response => {
         if (response.status == 200) {
             if (response.data.accessToken) {
-                localStorage.setItem('userData', JSON.stringify(response.data))
+                localStorage.setItem('userData', JSON.stringify(response.data));
+                return response;
             }
         }
-        return response.data;
+    }).catch(err => {
+        throw err;
     })
 }
 
 export default {
-    login: login,
-    logout: logout,
-    register: register
+    login,
+    logout,
+    register
 }
 
