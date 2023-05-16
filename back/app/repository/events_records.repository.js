@@ -14,7 +14,7 @@ async function getAllEventsAndRecordsByUser(username) {
 }
 
 async function saveHealthRecord(health_record_item, username) {
-    health_record_item.indicator_id = health_record_item.indicator.id;
+    health_record_item.indicator_id = health_record_item.health_indicator.id;
     if (!health_record_item.user_id) {
         user = await db.user.findOne({ where: { username: username } });
         health_record_item.user_id = user.id;

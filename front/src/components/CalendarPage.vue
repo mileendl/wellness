@@ -196,6 +196,7 @@ export default {
         }
 
         obj.datetime = this.selectInfo.start;
+        console.log(obj)
         this.save(obj).then((res) => {
           console.log(res);
           obj.id = res.data;
