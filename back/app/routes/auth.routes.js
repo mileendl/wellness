@@ -26,10 +26,10 @@ function authRespoonse(req, res, err, user, info) {
 
             //Простой delete не удаляет поле из объекта-экземпляра прототипа
             user.password = undefined;
-            var userData = await userController.getAllEventsAndRecordsByUser(user.username);
+            //var userData = await userController.getAllEventsAndRecordsByUser(user.username);
 
             //Здесь в json собираются все данные, которые надо передать клиенту после успешной авторизации
-            return res.json({ accessToken: token, user: user, userData: userData });
+            return res.json({ accessToken: token, user: user, /*userData: userData*/ });
         })
     } catch (err) {
         //Сообщаем об ошибке сервера - что-то сломалось

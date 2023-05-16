@@ -22,10 +22,9 @@ const ax = axios.create({
 //Провалил авторизацию — токен всё
 ax.interceptors.response.use(function (response) {
   return response;
-
 }, function (error) {
   if (error.response.status == 401) {
-    store.dispatch('auth/logout')
+    store.dispatch('auth/logout');
     window.location.href = '/login';
   }
   throw error;

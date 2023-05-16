@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 var db = require('../config/db.config.js');
 
 async function getAllEventsAndRecordsByUserId(id) {
@@ -51,11 +52,26 @@ async function saveEvent(event, username) {
 }
 
 async function deleteHealthRecord(health_record_item/*, username*/) {
+    console.log(health_record_item)
     await db.health_record_item.destroy({ where: { id: health_record_item.id } });
 }
 
 async function deleteEvent(event/*, username*/) {
+    console.log(event);
     await db.event.destroy({ where: { id: event.id } });
 }
 
-module.exports = { getAllEventsAndRecordsByUser, saveEvent, saveHealthRecord, deleteEvent, deleteHealthRecord }
+
+async function setDismissedEvents(events) {
+    console.log('boooba');
+    return db.event.update({ isDismissed: 1 }, {
+        where: {
+            id: {
+                [Op.or]: events
+            }
+        }
+    }).then(() => {
+        console.log('kik');
+    })
+}
+module.exports = { getAllEventsAndRecordsByUser, saveEvent, saveHealthRecord, deleteEvent, deleteHealthRecord, setDismissedEvents }

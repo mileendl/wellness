@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
             datetime: {
                 type: DATE,
                 allowNull: false
-            }
+            },
         });
     // Определяем связи таблицы user_category с другими таблицами
     HealthRecord.associate = (models) => {

@@ -17,14 +17,11 @@ router.get('/get_all_events_and_records',
 
 router.post('/save_event',
     (req, res, next) => {
-        console.log(req.body);
         ERRepository.saveEvent(req.body, req.user).then(data => {
             console.log(data)
             res.json(data);
-            next();
+            //next();
         }
-            // //res.status(200);
-            // next()
         ).catch(err => {
             console.log(err);
             res.status(500).send();
@@ -34,12 +31,9 @@ router.post('/save_event',
 
 router.post('/save_health_record',
     (req, res, next) => {
-        console.log(req.body);
         ERRepository.saveHealthRecord(req.body, req.user).then(data => {
-            console.log(data)
-
             res.json(data);
-            next();
+            //next();
         }
         ).catch(err => {
             console.log(err);
@@ -50,7 +44,6 @@ router.post('/save_health_record',
 
 router.post('/delete_event',
     (req, res, next) => {
-        console.log(req.body);
         ERRepository.deleteEvent(req.body).then(
             next()
         ).catch(err => {
@@ -62,10 +55,24 @@ router.post('/delete_event',
 
 router.post('/delete_health_record',
     (req, res, next) => {
-        console.log(req.body);
         ERRepository.deleteHealthRecord(req.body).then(
-            //res.status(200);
             next()
+        ).catch(err => {
+            console.log(err);
+            res.status(500).send();
+        })
+    }
+)
+
+router.post('/setEventsDismissed',
+    (req, res, next) => {
+        // console.log('karamba')
+        // console.log(req.body);
+        ERRepository.setDismissedEvents(req.body).then(() => {
+            // console.log('lopa');
+            res.status(200);
+            next();
+        }
         ).catch(err => {
             console.log(err);
             res.status(500).send();

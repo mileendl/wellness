@@ -13,7 +13,7 @@ const auth = {
             return AuthService.login(user).then(
                 data => {
                     commit('loginSuccess', data);
-                    commit('setUserData', data.userData, { root: true })
+                    //commit('setUserData', data.userData, { root: true })
                     return Promise.resolve(user);
                 },
                 error => {
@@ -69,7 +69,13 @@ const auth = {
         registerFailure(state) {
             state.status.loggedIn = false;
         }
+    },
+    getters: {
+        getLoggedIn(state) {
+            return state.status.loggedIn;
+        },
     }
+
 }
 
 export default auth;

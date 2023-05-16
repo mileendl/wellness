@@ -27,7 +27,7 @@
             <div v-if="currentModal.dataType == 'health-record'">
               <div class="mb-3">
                 <label for="health-indicator" class="col-form-label">Показатель:</label>
-                <select v-model="currentModal.hr.indicator" id="health-indicator" class="form-select" required>
+                <select v-model="currentModal.hr.health_indicator" id="health-indicator" class="form-select" required>
                   <option v-for="indicator in health_indicators" v-text="indicator.data_type" v-bind:value="indicator"
                     v-bind:key="indicator.id">
                   </option>
@@ -38,11 +38,12 @@
               </div>
               <div class="mb-3">
                 <label for="hr_value" class="col-form-label">Значение:</label>
-                <input type="number" class="form-control" id="hr_value" v-model="currentModal.hr.value" required />
-                <span v-if="currentModal.hr.indicator.unit" class="form-text"
-                  v-text="currentModal.hr.indicator.unit"></span>
+                <input type="number" class="form-control" id="hr_value" v-model="currentModal.hr.value" required
+                  min="0" />
+                <span v-if="currentModal.hr.health_indicator.unit" class="form-text"
+                  v-text="currentModal.hr.health_indicator.unit"></span>
                 <div class="invalid-feedback">
-                  Введите число!
+                  Введите число больше 0!
                 </div>
               </div>
             </div>
@@ -112,11 +113,13 @@ function eventToFCEvent(event) {
   return res;
 }
 function hrToFCEvent(healthRecord) {
+  console.log(healthRecord.health_indicator)
   var res = {
     obj: healthRecord,
     type: 'health-record',
     title: healthRecord.health_indicator.data_type,
     start: healthRecord.datetime,
+    // indicator: healthRecord.health_indicator,
     color: 'red',
   }
   return res;
@@ -151,7 +154,7 @@ export default {
       currentModal: {
         dataType: '',
         isNewRecord: true,
-        hr: { indicator: {} },
+        hr: { health_indicator: {} },
         event: {}
       },
       selectInfo: null, //Для связи с календарём. Определяется каждый раз по нажатию на дату/ивент в календаре
@@ -189,7 +192,7 @@ export default {
         if (this.currentModal.dataType == "health-record") {
           obj = this.currentModal.hr;
           color = 'red';
-          title = this.currentModal.hr.indicator.data_type;
+          title = this.currentModal.hr.health_indicator.data_type;
         }
 
         obj.datetime = this.selectInfo.start;
@@ -214,7 +217,7 @@ export default {
         event.setExtendedProp('type', this.currentModal.dataType);
 
         if (this.currentModal.dataType == 'health-record') {
-          event.setProp('title', this.currentModal.hr.indicator.data_type);
+          event.setProp('title', this.currentModal.hr.health_indicator.data_type);
           event.setProp('color', 'red');
           obj = this.currentModal.hr
         }
@@ -238,7 +241,6 @@ export default {
 
       modal.show();
       const event = clickInfo.event.extendedProps;
-      console.log(event)
       if (event.type == 'event') {
         this.currentModal.dataType = 'event';
         this.currentModal.event = event.obj;
@@ -251,7 +253,7 @@ export default {
     },
     //Обрабатываем нажатие кнопки удаления
     handleDelete() {
-      this.delete(this.clickInfo.event.obj).then(() => {
+      this.delete(this.clickInfo.event.extendedProps.obj).then(() => {
         this.clickInfo.event.remove();
         modal.hide();
       })
@@ -262,12 +264,12 @@ export default {
     getHealthIndicators() {
       return this.$store.getters.getDefaultData.health_indicators;
     },
-    // getEvents() {
-    //   return this.$store.getters.getEvents;
-    // },
-    // getHealthRecords() {
-    //   return this.$store.getters.getHealthRecords;
-    // },
+    getEvents() {
+      return this.$store.getters.getEvents;
+    },
+    getHealthRecords() {
+      return this.$store.getters.getHealthRecords;
+    },
     async save(obj) {
       if (this.currentModal.dataType == 'event') {
         return await this.saveEvent(obj);
@@ -307,25 +309,23 @@ export default {
 
     let calendarApi = this.$refs.fullCalendar.getApi();
 
-    erService.getAllEventsAndRecords().then(res => {
-      console.log(res);
-      var events = [];
-      var hrs = [];
-      for (var item of res.data.events) {
-        events.push(eventToFCEvent(item));
-      }
-      for (let i = 0; i < res.data.healthRecords.length; i++) {
-        hrs.push(hrToFCEvent(res.data.healthRecords[i]));
-      }
-      calendarApi.addEventSource(events);
-      calendarApi.addEventSource(hrs);
-    })
-
+    var events = [];
+    var hrs = [];
+    for (var item of this.getEvents()) {
+      events.push(eventToFCEvent(item));
+    }
+    var hr = this.getHealthRecords()
+    for (let i = 0; i < hr.length; i++) {
+      hrs.push(hrToFCEvent(hr[i]));
+    }
+    calendarApi.addEventSource(events);
+    calendarApi.addEventSource(hrs);
+    //})
 
     var mt = document.querySelector('#recordModal');
     modal = bootstrap.Modal.getOrCreateInstance(mt);
     mt.addEventListener('hidden.bs.modal', () => {
-      this.currentModal.hr = { indicator: {} };
+      this.currentModal.hr = { health_indicator: {} };
       this.currentModal.event = {};
       this.clickInfo = null;
     })
@@ -334,3 +334,13 @@ export default {
 }
 
 </script>
+<style>
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  color: black
+}
+</style>

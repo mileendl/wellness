@@ -2,8 +2,7 @@ import http from '../http-common'
 
 async function getAllEventsAndRecords() {
     var events = await http.get('events/get_all_events_and_records');
-    console.log(events);
-    return events;
+    return events.data;
 }
 
 async function saveEvent(event) {
@@ -30,6 +29,12 @@ async function deleteHealthRecord(health_record) {
     })
 }
 
+async function setEventsDismissed(eventsIds) {
+    return http.post('events/setEventsDismissed', eventsIds).then(response => {
+        return response;
+    })
+}
+
 export default {
-    getAllEventsAndRecords, saveEvent, saveHealthRecord, deleteEvent, deleteHealthRecord
+    getAllEventsAndRecords, saveEvent, saveHealthRecord, deleteEvent, deleteHealthRecord, setEventsDismissed
 }

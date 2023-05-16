@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import auth from './auth.module';
 import ddService from '../services/default_data.service';
+import erService from '../services/events_records.service'
 
 const store = createStore({
     modules: {
@@ -23,8 +24,8 @@ const store = createStore({
         setEvents(state, events) {
             state.events = events;
         },
-        setHealthRecords(state, health_records) {
-            state.healthRecords = health_records;
+        setHealthRecords(state, healthRecords) {
+            state.healthRecords = healthRecords;
         },
     },
     getters: {
@@ -42,6 +43,10 @@ const store = createStore({
         async loadDefaultData({ commit },) {
             const data = await ddService.getDefaultData();
             commit('setDefaultData', data);
+        },
+        async loadUserData({ commit },) {
+            const data = await erService.getAllEventsAndRecords();
+            commit('setUserData', data);
         },
     }
 });
