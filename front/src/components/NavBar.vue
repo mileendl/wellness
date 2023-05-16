@@ -37,11 +37,8 @@
                         <ul class="dropdown-menu">
                             <li v-for="notification in notifications" :key="notification"><a class="dropdown-item" href="#"
                                     v-text="notification.name" :value="notification"
-                                    :style="'color: ' + notification.tag.color"></a></li>
-                            <li>
-                                <hr class="dropdown-divider">
+                                    :style="'color: ' + notification.tag.color"></a>
                             </li>
-                            <!-- <li><a class="dropdown-item" href="#">Пометить все как прочитанные</a></li> -->
                         </ul>
                     </li>
                 </ul>
