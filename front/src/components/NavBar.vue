@@ -133,15 +133,17 @@ export default {
             return res;
         },
         setDismissed() {
-            var res = [];
-            for (let i = 0; i < this.notifications.length; i++) {
-                let item = this.notifications[i];
-                if (!item.isDismissed) {
-                    res.push(item.id);
+            if (this.newNotifications > 0) {
+                var res = [];
+                for (let i = 0; i < this.notifications.length; i++) {
+                    let item = this.notifications[i];
+                    if (!item.isDismissed) {
+                        res.push(item.id);
+                    }
                 }
+                this.newNotifications = 0;
+                erService.setEventsDismissed(res);
             }
-            this.newNotifications = 0;
-            erService.setEventsDismissed(res);
         }
     },
     mounted: function () {
