@@ -20,6 +20,10 @@ module.exports = (sequelize, Sequelize) => {
         datetime: {
             type: DATE,
             allowNull: false
+        },
+        isDismissed: {
+            type: Sequelize.BOOLEAN,
+            defaultValue: 0
         }
     });
     Event.associate = (models) => {

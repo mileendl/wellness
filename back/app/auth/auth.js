@@ -48,13 +48,13 @@ passport.use('login', new localStrategy({
 
     db.user.findOne({ where: { username: username } }).then((user) => {
         if (user == null) {
-            done(null, false, { status: 401, msg: 'Wrong password or login' });
+            done(null, false, { status: 404, msg: 'Wrong password or login' });
         } else {
             bcrypt.compare(password, user.password).then((isValid) => {
                 if (isValid) {
                     return done(null, user, { msg: 'Logged in successfully' });
                 } else {
-                    return done(null, false, { status: 401, msg: 'Wrong password or login' });
+                    return done(null, false, { status: 404, msg: 'Wrong password or login' });
                 }
             })
         }
@@ -72,7 +72,6 @@ passport.use(new JWTStrategy(
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     },
     async (token, done) => {
-        console.log('TOKEN')
         try { return done(null, token.user); }
         catch (err) {
             console.log(err)

@@ -20,10 +20,10 @@ module.exports = (sequelize, Sequelize) => {
                 type: Sequelize.INTEGER(10),
                 allowNull: false
             },
-            date: {
+            datetime: {
                 type: DATE,
                 allowNull: false
-            }
+            },
         });
     // Определяем связи таблицы user_category с другими таблицами
     HealthRecord.associate = (models) => {
@@ -32,9 +32,9 @@ module.exports = (sequelize, Sequelize) => {
         HealthRecord.belongsTo(models.user, {
             foreignKey: 'user_id'
         });
-
-
-        // HealthRecord.hasOne(models.);
+        HealthRecord.belongsTo(models.health_indicator, {
+            foreignKey: 'indicator_id'
+        });
     };
     return HealthRecord;
 };

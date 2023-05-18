@@ -13,13 +13,16 @@ const auth = {
             return AuthService.login(user).then(
                 data => {
                     commit('loginSuccess', data);
+                    //commit('setUserData', data.userData, { root: true })
                     return Promise.resolve(user);
                 },
                 error => {
                     commit('loginFailure');
                     return Promise.reject(error);
                 }
-            );
+            ).catch(err => {
+                throw (err);
+            });
         },
         logout({ commit }) {
             AuthService.logout();
@@ -36,7 +39,9 @@ const auth = {
                     commit('registerFailure');
                     return Promise.reject(error);
                 }
-            );
+            ).catch(err => {
+                throw (err);
+            });
         }
     },
     mutations: { // Мутации. Позволяют изменять состояние хранилища во Vuex. Сохраняют данные пользователя в локальное хранилище в браузере. Также удаляют данные пользователя
@@ -64,7 +69,13 @@ const auth = {
         registerFailure(state) {
             state.status.loggedIn = false;
         }
+    },
+    getters: {
+        getLoggedIn(state) {
+            return state.status.loggedIn;
+        },
     }
+
 }
 
 export default auth;

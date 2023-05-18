@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var authRoutes = require('./app/routes/auth.routes')
-var eventRoutes = require('./app/routes/event.routes')
+var eventRoutes = require('./app/routes/event_records.routes')
 var defaultRoutes = require('./app/routes/default_routes')
 
 
@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var cors = require('cors');
 var corsOptions = {
-    origin: 'http://192.168.3.26:8080', //Любое происхождение приемлимо
+    origin: ' http://localhost:8080',
     credentials: true, // разрешаем обрабатывать запросы
     optionSuccessStatus: 200 // при успешной обработке запроса будет возвращён статус 200
 };

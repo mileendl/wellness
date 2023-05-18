@@ -26,9 +26,6 @@ module.exports = (sequelize, Sequelize) => {
             onUpdate: 'CASCADE',
             sourceKey: 'id'
         });
-        //HealthIndicator.belongsTo(models.health_record_item , {
-        // foreignKey: 'record_id'
-        ///});
     };
     return HealthIndicator;
 }
