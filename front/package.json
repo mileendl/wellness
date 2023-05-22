@@ -12,14 +12,15 @@
     "@fullcalendar/daygrid": "^6.1.5",
     "@fullcalendar/interaction": "^6.1.5",
     "@fullcalendar/vue3": "^6.1.5",
-    "axios": "^1.3.5",
+    "axios": "^1.3.6",
+    "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.4",
     "chart.js": "^4.2.1",
     "core-js": "^3.8.3",
+    "vue": "^3.2.13",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.1.6",
-    "bootstrap-icons": "^1.10.4",
-    "vue": "^3.2.13",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
