@@ -33,6 +33,9 @@
   mounted() {
   },
     methods: {
+        addRecord() {
+            
+        },
         //err
         createRecord(err) {
             err.preventDefault();

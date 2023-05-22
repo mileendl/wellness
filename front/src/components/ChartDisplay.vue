@@ -53,8 +53,10 @@
   
   export default {
     name: 'LineChart',
+    
     components: { Line },
     data() {
+      
       return {
         chartData: {
           labels: this.dates,
@@ -95,6 +97,7 @@
     }
   }
   ;
+  
   </script>
   <style scoped>
     div {

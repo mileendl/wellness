@@ -62,6 +62,7 @@ import config from '../config/config'
 
 function getProgram(id) {
     return dds.getTrainingProgram(id).then(res => {
+        console.log(res);
         return res;
     });
 }
