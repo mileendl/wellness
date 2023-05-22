@@ -25,6 +25,9 @@
                         <router-link to="/trainingPrograms" class="nav-link px-2 text-white">
                             Программы тренировок</router-link>
                     </li>
+                    <li class="nav-item" v-if="currentUser">
+                        <router-link to="/healthRecords" class="nav-link px-2 text-white">Показатели здоровья</router-link>
+                    </li>
                 </ul>
 
                 <div v-if="currentUser" class="d-lg-flex justify-content-lg-end mb-2 mb-md-0">

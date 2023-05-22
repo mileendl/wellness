@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var cors = require('cors');
 var corsOptions = {
-    origin: 'http://192.168.3.26:8080', //Любое происхождение приемлимо
+    origin: ' http://localhost:8080', //Любое происхождение приемлимо
     credentials: true, // разрешаем обрабатывать запросы
     optionSuccessStatus: 200 // при успешной обработке запроса будет возвращён статус 200
 };

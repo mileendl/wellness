@@ -9,7 +9,8 @@ async function getDefaultData() {
     const tags = await db.tag.findAll();
     const indicators = await db.health_indicator.findAll();
     const programs = await db.training_program.findAll();
-    var default_data = { tags: tags, health_indicators: indicators, training_programs: programs };
+    const records = await db.health_record_item.findAll();
+    var default_data = { tags: tags, health_indicators: indicators, training_programs: programs, records: records};
     return default_data;
 }
 
