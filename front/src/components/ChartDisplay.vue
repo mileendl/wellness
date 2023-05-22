@@ -22,32 +22,38 @@
   import { Line } from 'vue-chartjs'
   import { Chart as ChartJS, Title, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale } from 'chart.js'
   
-  function getRecords() {
-    console.log(dds.getDefaultData())
-    return dds.getDefaultData()           
-  }
 
-  function decomposeRecordsIntoDates(records){
-    var dates = [];
-    records.forEach(record => {
-      dates.push(record.date)
+function getHealthIndicators() {
+   return dds.getHealthIndicators().then(res => {
+    console.log(res)
+       return res;
+   });
+}
+
+/* function getHealthRecords() {
+    return dds.getHealthRecords().then(res => {
+        console.log(res);
+        return res;
     });
-    return dates
+} */
+
+function decomposeRecordsIntoDates(records){
+    var dates = [];
+    for(let record in records ) dates.push(record.date)
+    return dates;
   }
 
   function decomposeRecordsIntoValues(records){
     var values = [];
-    records.forEach(record => {
-      values.push(record.value)
-    });
-    return values
+    for(let record in records ) values.push(record.value)
+    return values;
   }
 
-  function getIndicator(id) {
-    return dds.getHealthIndicator(id).then(res => {
+  function getRecordsByIndicator(id){
+    return dds.getRecordsByIndicator(id).then(res => {
         return res;
     });
-}
+  }
 
   ChartJS.register(Title, Tooltip, Legend, LineElement,  PointElement, CategoryScale, LinearScale)
   
@@ -56,7 +62,6 @@
     
     components: { Line },
     data() {
-      
       return {
         chartData: {
           labels: this.dates,
@@ -72,32 +77,29 @@
             borderWidth: 2
           }]
         },
-        health_indicators: this.$store.getters.getDefaultData.health_indicators,
-        
+        health_indicators: this.$store.getters.getDefaultData.health_indicators,    
       }
     },
  
     beforeMount: function () {
-        getRecords().then((res) => {
-            this.records = res;
-            decomposeRecordsIntoDates(this.records).then((res) =>{
-              console.log(this.records)
-              this.dates = res;
-            });
-            decomposeRecordsIntoValues(this.records).then((res) =>{
-              this.values = res;
-            });
-            getIndicator(this.$route.params.id).then((res) => {
-              this.indicator = res;
-            });
+      getHealthIndicators().then((res) => {
+            console.log(res)
+            this.indicators = res;
         });
-
         
-
+    },
+    mounted: function () {
+      getRecordsByIndicator(this.$route.params.id).then((res)=>{
+          this.records=res;
+          decomposeRecordsIntoDates(this.records).then((res)=>{
+            this.dates=res;
+          });
+          decomposeRecordsIntoValues(this.records).then((res)=>{
+            this.values=res;
+          });
+      });
     }
   }
-  ;
-  
   </script>
   <style scoped>
     div {

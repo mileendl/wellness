@@ -24,7 +24,6 @@
         value: '',
         indicator: '',
         date: new Date(),
-        user: '',
       },
       message: '',
       health_indicators: this.$store.getters.getDefaultData.health_indicators
@@ -33,14 +32,10 @@
   mounted() {
   },
     methods: {
-        addRecord() {
-            
-        },
-        //err
         createRecord(err) {
             err.preventDefault();
             this.message = '';
-            this.$store.dispatch("createrecord", this.form).then(data => {
+            this.$store.dispatch("/createrecord", this.form).then(data => {
                 this.message = data.msg;
                 this.$router.push('/healthRecords');
             }).catch((err)=>{

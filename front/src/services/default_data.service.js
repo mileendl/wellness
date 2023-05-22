@@ -15,8 +15,8 @@ function getTrainingProgram(id) {
         })
 }
 
-function getHealthRecord(id) {
-    return http.get('/default/get_health_record', { params: { id: id } })
+function getHealthRecords() {
+    return http.get('/default/get_health_records')
         .then(response => {
             return response.data;
         }).catch(err => {
@@ -25,7 +25,26 @@ function getHealthRecord(id) {
 }
 
 function getHealthIndicator(id) {
-    return http.get('/default/get_health_indicators', { params: { id: id } })
+    return http.get('/default/get_health_indicator', { params: { id: id } })
+        .then(response => {
+            return response.data;
+        }).catch(err => {
+            return err;
+        })
+}
+
+function getRecordsByIndicator(indicator_id) {
+    return http.get('/default/get_records_by_indicator', { params: { indicator_id: indicator_id } })
+        .then(response => {
+            return response.data;
+        }).catch(err => {
+            return err;
+        })
+}
+
+
+function getHealthIndicators() {
+    return http.get('/default/get_health_indicators')
         .then(response => {
             return response.data;
         }).catch(err => {
@@ -40,7 +59,7 @@ function createRecord(form){
         date: form.date,
         user_id: form.user.id,
     }
-    return http.post('createrecord', recordData).then(response => {
+    return http.post('/createrecord', recordData).then(response => {
         if (response.status == 200) {
             if (response.data.accessToken) {
                 localStorage.setItem('recordData', JSON.stringify(response.data))
@@ -53,7 +72,9 @@ function createRecord(form){
 export default {
     getDefaultData: getDefaultData,
     getTrainingProgram: getTrainingProgram,
-    getHealthRecord: getHealthRecord,
+    getHealthRecords: getHealthRecords,
     getHealthIndicator: getHealthIndicator,
-    createRecord: createRecord
+    createRecord: createRecord,
+    getHealthIndicators: getHealthIndicators,
+    getRecordsByIndicator: getRecordsByIndicator
 }

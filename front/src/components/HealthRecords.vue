@@ -15,7 +15,7 @@
             <tbody>
                 <tr v-for="(record, index) in records" :key="record.id">
                     <th scope="row" v-text="index"></th>
-                    <td v-text="indicators[record.indicator_id].name"></td>
+                    <td v-text="record.indicator_id"></td>
                     <td v-text="record.date"></td>
                     <td v-text="record.value" ></td>
                     <td v-text="record.indicator_id"></td>
@@ -25,13 +25,21 @@
     </div>
 </template>
 <script>
-//import dds from '../services/default_data.service'
+import dds from '../services/default_data.service'
 
-//function getHealthIndicator(id) {
-    //return dds.getHealthIndicator(id).then(res => {
-      //  return res;
-   // });
-//}
+function getHealthIndicators() {
+   return dds.getHealthIndicators().then(res => {
+    console.log(res)
+       return res;
+   });
+}
+
+function getHealthRecords() {
+    return dds.getHealthRecords().then(res => {
+        console.log(res);
+        return res;
+    });
+}
 
 export default {
     
@@ -39,74 +47,21 @@ export default {
     //Статические переменные
     data() {
         return {
-            records: {},
-            indicators: {}
-        }
-    },
-    methods: {
-        getRecords() {
-            console.log(this.$store.getters.getDefaultData.records);
-            return this.$store.getters.getDefaultData.records;
-        },
-
-        getIndicators(){
-            console.log( this.$store.getters.getDefaultData);
-            console.log( this.$store.getters.getDefaultData.health_indicators);
-            return this.$store.getters.getDefaultData.health_indicators;
+            records: this.$store.getters.getDefaultData.health_records,
+            indicators: this.$store.getters.getDefaultData.health_indicators
         }
     },
     mounted: function () {
-        this.records = this.getRecords();
-        this.indicators = this.getIndicators();
-<template>
-    <div>
-        <small class="text-muted">Записи данного пользователя</small>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Показатель</th>
-                    <th scope="col">Дата</th>
-                    <th scope="col">Значение</th>
-                    <th scope="col">Ед. изм.</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(record, index) in HealthRecords" :key="record.id">
-                    <th scope="row" v-text="index"></th>
-                    <td v-text="record.name"></td>
-                    <td v-text="record.date"></td>
-                    <td v-text="record.value"></td>
-                    <td v-text="record.description"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</template>
-<script>
         
-
-    }
-}
-</script>
-export default {
-    name: 'HealthRecords',
-    data() {
-        return {
-            records: [],
-        }
     },
-    // created() {
-    // },
-    methods: {
-        getHealthRecords() {
-            //console.log(this.$store.getters.getDefaultData.health_record_);
-            return this.$store.getters.getDefaultData.health_record_item;
-        }
-    },
-    mounted: function () {
-        this.HealthRecords = this.getHealthRecords();
+    beforeMount: function () {
+        getHealthIndicators().then((res) => {
+            console.log(res)
+            this.indicators = res;
+        });
+        getHealthRecords().then((res) => {
+            this.records = res;
+        });
     }
-}
+    }
 </script>
