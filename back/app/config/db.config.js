@@ -45,7 +45,7 @@ db.sequelize = sequelize;
 db.user = require('../model/user.model.js')(sequelize, Sequelize);
 db.health_record_item = require('../model/health_record_item.model.js')(sequelize, Sequelize);
 db.training_program = require('../model/training_program.model.js')(sequelize, Sequelize);
-db.medication = require('../model/medication.model.js')(sequelize, Sequelize);
+
 db.health_indicator = require('../model/health_indicator.model.js')(sequelize, Sequelize);
 db.exercise = require('../model/exercise.model.js')(sequelize, Sequelize);
 db.event = require('../model/event.model.js')(sequelize, Sequelize)

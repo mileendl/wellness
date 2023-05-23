@@ -64,8 +64,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     // для тех маршрутов, для которых не определены компоненты, подключается только App.vue
     // поэтому устанавливаем заголовком по умолчанию название "Главная страница"
+    const user = localStorage.getItem("userData");
     document.title = to.meta.title || 'Главная страница';
-    next();
+
+    if ((user == null) && to.fullPath != '/' && to != '/addUser' && to.fullPath != '/login') {
+        next('/login')
+    } else {
+        next();
+    }
 });
 
 export default router;
