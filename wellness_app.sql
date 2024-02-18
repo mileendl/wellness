@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2024 at 04:17 PM
+-- Generation Time: Feb 18, 2024 at 04:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -123,7 +123,7 @@ CREATE TABLE `health_record` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
   `value` int(10) NOT NULL,
-  `date` datetime NOT NULL,
+  `datetime` datetime NOT NULL,
   `indicator_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -131,7 +131,7 @@ CREATE TABLE `health_record` (
 -- Dumping data for table `health_record`
 --
 
-INSERT INTO `health_record` (`id`, `user_id`, `value`, `date`, `indicator_id`) VALUES
+INSERT INTO `health_record` (`id`, `user_id`, `value`, `datetime`, `indicator_id`) VALUES
 (1, 2, 3, '2023-05-09 20:00:20', 2),
 (2, 2, 4, '2023-05-21 16:32:57', 6),
 (3, 2, 7, '2023-05-21 16:32:57', 7),
@@ -222,7 +222,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `name`, `username`, `password`, `admin`) VALUES
 (1, 'Павел Павлов', 'user1', '$2b$10$wPat9.//8B8qc/POLFhs/e/3SGKajL.8v2oNlHzz9tSizEKuin6O.', 0),
 (2, 'Владимир Владимирович Путин', 'VladimirPutin', '$2b$10$b6/qu2MJeNNEu/pjPOiwJeNNuWQp10Xe4sAxtGTL9sGsQ.RiQVRTq', 0),
-(3, 'Владимир Владимирович Путин', 'VladimirPutin2', '$2b$10$vHVtg0ooI4HlWY6.C5lOJec63qItEjyOsH519MPDoaHfzFVGswAI.', 0);
+(3, 'Владимир Владимирович Путин', 'VladimirPutin2', '$2b$10$vHVtg0ooI4HlWY6.C5lOJec63qItEjyOsH519MPDoaHfzFVGswAI.', 0),
+(4, 'Chpi Chapa', 'ChipiChipi', '$2b$10$YIxGbgfwYvTZWZkA8ZOc5.WzWy5suOjpgcRG8qT6GL/Qu/0pX9Wfy', 0);
 
 --
 -- Indexes for dumped tables
@@ -333,7 +334,7 @@ ALTER TABLE `training_program`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
