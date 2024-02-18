@@ -414,7 +414,6 @@ export default {
     }
     calendarApi.addEventSource(events);
     calendarApi.addEventSource(hrs);
-    //})
 
     var mt = document.querySelector("#recordModal");
     modal = bootstrap.Modal.getOrCreateInstance(mt);

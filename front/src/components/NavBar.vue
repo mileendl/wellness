@@ -86,6 +86,7 @@
                   v-text="notification.name"
                   :value="notification"
                   :style="'color: ' + notification.tag.color"
+                  @click="setDismissed()"
                 ></a>
               </li>
             </ul>

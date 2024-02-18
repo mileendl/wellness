@@ -18,7 +18,9 @@
           <td v-text="record.health_indicator.data_type"></td>
           <td
             v-text="
-              new Intl.DateTimeFormat(['ban', 'id']).format(record.datetime)
+              new Intl.DateTimeFormat(['ban', 'id']).format(
+                new Date(record.datetime)
+              )
             "
           ></td>
           <td v-text="record.value"></td>
@@ -40,14 +42,14 @@ export default {
   },
   methods: {
     getHealthIndicators() {
-      console.log(this.$store.getters.getDefaultData.training_programs);
-      return this.$store.getters.getHealthIndicators;
+      return this.$store.getters.getDefaultData.health_indicators;
     },
     getHealthRecords() {
       return this.$store.getters.getHealthRecords;
     },
   },
   mounted: function () {
+    console.log(this.getHealthRecords());
     this.records = this.getHealthRecords();
     this.indicators = this.getHealthIndicators();
   },
