@@ -97,8 +97,6 @@ export default {
         form.classList.add('was-validated');
         return null;
       }
-
-
       // обращаемся к методу register, который определён в auth.service.js
       this.$store.dispatch("auth/register", this.user).then(() => {
         // this.message = data.message;

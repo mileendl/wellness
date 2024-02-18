@@ -64,7 +64,8 @@ async function deleteEvent(event/*, username*/) {
 
 async function setDismissedEvents(events) {
     console.log('boooba');
-    return db.event.update({ isDismissed: 1 }, {
+    console.log(events);
+    return db.event.update({ is_dismissed: 1 }, {
         where: {
             id: {
                 [Op.or]: events
