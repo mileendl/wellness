@@ -3,8 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var authRoutes = require('./app/routes/auth.routes')
 var eventRoutes = require('./app/routes/event.routes')
-var defaultRoutes = require('./app/routes/default_routes')
-
+var defaultRoutes = require('./app/routes/default.routes.js')
+var healthRecordsRoutes = require('./app/routes/health.record.routes')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,11 +23,11 @@ const passport = require('passport');
 db.sequelize.sync({ force: false });
 
 require('./app/auth/auth');
-app.use('/auth', authRoutes);
-
-app.use('/events', passport.authenticate('jwt', { session: false }), eventRoutes);
 
 app.use('/default', defaultRoutes);
+app.use('/auth', authRoutes);
+app.use('/events', passport.authenticate('jwt', { session: false }), eventRoutes);
+app.use('/health_records', passport.authenticate('jwt', { session: false }), healthRecordsRoutes);
 
 // console.log(__dirname + '/resources');
 //Для доступа к изображениям

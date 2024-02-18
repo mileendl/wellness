@@ -16,7 +16,7 @@ function getTrainingProgram(id) {
 }
 
 function getHealthRecords() {
-    return http.get('/default/get_health_records')
+    return http.get('/health_records/get_health_records')
         .then(response => {
             return response.data;
         }).catch(err => {
@@ -34,7 +34,7 @@ function getHealthIndicator(id) {
 }
 
 function getRecordsByIndicator(indicator_id) {
-    return http.get('/default/get_records_by_indicator', { params: { indicator_id: indicator_id } })
+    return http.get('/health_records/get_records_by_indicator', { params: { indicator_id: indicator_id } })
         .then(response => {
             return response.data;
         }).catch(err => {

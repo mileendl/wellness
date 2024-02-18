@@ -25,16 +25,16 @@ module.exports = (sequelize, Sequelize) => {
                 allowNull: false
             }
         });
-    // Определяем связи таблицы user_category с другими таблицами
     HealthRecord.associate = (models) => {
-        // Определение связи один-ко-многим с таблицей user. Это определение связи с одной стороны.
-        // Связь также определена со второй стороны (со стороны таблицы user): в файле user.model.js
         HealthRecord.belongsTo(models.user, {
             foreignKey: 'user_id'
         });
+    };
 
-
-        // HealthRecord.hasOne(models.);
+    HealthRecord.associate = (models) => {
+        HealthRecord.belongsTo(models.health_indicator, {
+            foreignKey: 'indicator_id'
+        });
     };
     return HealthRecord;
 };
