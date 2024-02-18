@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
             type: DATE,
             allowNull: false
         },
-        isDismissed: {
+        is_dismissed: {
             type: Sequelize.BOOLEAN,
             defaultValue: 0
         }
