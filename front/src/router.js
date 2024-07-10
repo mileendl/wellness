@@ -6,6 +6,7 @@ import ChartDisplay from "./components/ChartDisplay";
 import LogIn from "./components/LogIn"
 import TrainingProgram from './components/TrainingProgram';
 import TrainingPrograms from './components/TrainingPrograms';
+import HealthRecords from './components/HealthRecords';
 
 // определяем маршруты
 const routes = [
@@ -52,6 +53,12 @@ const routes = [
         name: "trainingProgram",
         component: TrainingProgram,
         meta: { title: 'Тренировочная программа' }
+    },
+    {
+        path: "/healthRecords",
+        name: "healthRecords",
+        component: HealthRecords,
+        meta: { title: 'Записи о здоровье' }
     }
 ];
 
@@ -64,8 +71,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     // для тех маршрутов, для которых не определены компоненты, подключается только App.vue
     // поэтому устанавливаем заголовком по умолчанию название "Главная страница"
+    const user = localStorage.getItem("userData");
     document.title = to.meta.title || 'Главная страница';
-    next();
+
+    if ((user == null) && to.fullPath != '/' && to != '/addUser' && to.fullPath != '/login') {
+        next('/login')
+    } else {
+        next();
+    }
 });
 
 export default router;

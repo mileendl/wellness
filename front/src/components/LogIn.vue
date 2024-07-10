@@ -71,10 +71,8 @@ export default {
             // обращаемся к методу register, который определён в auth.service.js
             this.$store.dispatch("auth/login", this.user).then(data => {
                 this.message = data.msg;
-                console.log(data);
                 //Перенаправляет на календарь
                 window.location.href = '/calendar';
-                // this.successful = true;
             }).catch((err) => {
                 switch (err.response.status) {
                     case 404: this.message = "Неверный логин или пароль!";
